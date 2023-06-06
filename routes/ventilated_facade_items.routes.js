@@ -4,7 +4,6 @@ const ventilatedFacadeItemsController = require('../controllers/ventilated_facad
 
 router.post('/ventilatedFacadesCards', ventilatedFacadeItemsController.createVentilatedFacadeItem)
 router.get('/ventilatedFacadesCards', ventilatedFacadeItemsController.getItemsFromOneVentilatedFacade)
-// router.get('/ventilatedFacades/:id', ventilatedFacadeItemsController.getOne)
 router.delete('/ventilatedFacadesCards/:id', ventilatedFacadeItemsController.deleteItemsFromOneVentilatedFacade)
 
 module.exports = router

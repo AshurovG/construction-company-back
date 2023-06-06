@@ -11,7 +11,7 @@ app.use(express.json()) // Так как express не может по умолч
 app.use('/api', ventilatedFacadesRouter)
 app.use('/api', ventilatedFacadeItemsRouter)
 app.use('/api', exteriorDesignRouter)
-// app.use('/api', exteriorDesignItemsRouter)
+app.use('/api', exteriorDesignItemsRouter)
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`))
 

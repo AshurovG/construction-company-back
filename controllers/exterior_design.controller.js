@@ -1,6 +1,6 @@
 const db = require('../db')
 
-class VentilatedFacadesController {
+class ExteriorDesignController {
     async createExteriorDesign(req, res) {
         const {exteriorDesignTitle, exteriorDesignUrl} = req.body
         const newExteriorDesign = await db.query('INSERT INTO exterior_design(exterior_design_title, exterior_design_url) VALUES ($1, $2) RETURNING *',
@@ -33,4 +33,4 @@ class VentilatedFacadesController {
     }
 }
 
-module.exports = new VentilatedFacadesController()
+module.exports = new ExteriorDesignController()
