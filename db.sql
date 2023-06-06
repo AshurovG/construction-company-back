@@ -1,3 +1,32 @@
+--Триггеры
+
+CREATE OR REPLACE FUNCTION delete_cards_and_ventilated_facade()
+RETURNS TRIGGER AS $$
+BEGIN
+  DELETE FROM ventilated_facade_items WHERE ventilated_facades_id = OLD.ventilated_facades_id;
+  RETURN OLD;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER trg_delete_cards_and_ventilated_facade
+BEFORE DELETE ON ventilated_facades
+FOR EACH ROW
+EXECUTE FUNCTION delete_cards_and_ventilated_facade();
+
+CREATE OR REPLACE FUNCTION delete_cards_and_exterior_design()
+RETURNS TRIGGER AS $$
+BEGIN
+  DELETE FROM exterior_design_items WHERE exterior_design_id = OLD.exterior_design_id;
+  RETURN OLD;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER trg_delete_cards_and_exterior_design
+BEFORE DELETE ON exterior_design
+FOR EACH ROW
+EXECUTE FUNCTION delete_cards_and_exterior_design();
+
+
 create table ventilated_facades (
 	ventilated_facades_id serial primary key,
 	ventilated_facades_title varchar(70) not null,
