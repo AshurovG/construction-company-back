@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/AshurovG/construction-company-back/issues"
   },
-  "homepage": "https://github.com/AshurovG/construction-company-back#readme"
+  "homepage": "https://github.com/AshurovG/construction-company-back#readme",
+  "dependencies": {
+    "node": "^20.2.0"
+  }
 }
