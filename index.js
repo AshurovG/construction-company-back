@@ -1,10 +1,10 @@
 const express = require('express')
 // const path = require('path')
 
-const ventilatedFacadesRouter = require('./routes/ventilated_facades.routes')
-const ventilatedFacadeItemsRouter = require('./routes/ventilated_facade_items.routes')
-const exteriorDesignRouter = require('./routes/exterior_design.routes')
-const exteriorDesignItemsRouter = require('./routes/exterior_design_items.routes')
+const ventilatedFacadesRouter = require('./ventilatedFacades/ventilated_facades.routes')
+const ventilatedFacadeItemsRouter = require('./ventilated_facade_items/ventilated_facade_items.routes')
+const exteriorDesignRouter = require('./exterior_design/exterior_design.routes')
+const exteriorDesignItemsRouter = require('./exterior_design_items/exterior_design_items.routes')
 
 const PORT = process.env.POST || 8000 // Берет порт окружения
 

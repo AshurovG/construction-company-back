@@ -1,6 +1,6 @@
 const Router = require('express')
 const router = new Router()
-const exteriorDesignController = require('../controllers/exterior_design.controller')
+const exteriorDesignController = require('./exterior_design.controller')
 
 router.post('/exteriorDesign', exteriorDesignController.createExteriorDesign)
 router.get('/exteriorDesign', exteriorDesignController.getExteriorDesign)
