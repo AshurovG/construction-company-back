@@ -16,9 +16,21 @@ class VentilatedFacadesController {
         try 
         {
             const ventilatedFacades = await db.query('SELECT * FROM ventilated_facades')
+
+            const query = 'SELECT * FROM ventilated_facades';
+
+            db.query(query, (error, results) => {
+            if (error) {
+                throw error;
+            }
+                const data = results.rows;
+                console.log(data);
+                db.end();
+            });
+
             res.json(ventilatedFacades.rows) // Возвращаем весь select
         } catch(err) {
-            res.status(400).send({status: 'Bad Request', message: err.message})
+           res.status(400).send({status: 'Bad Request', message: err.message})
         }
     }
 
