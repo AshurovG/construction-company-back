@@ -39,8 +39,10 @@ class ventilatedFacadesDAO {
         return ventilatedFacadesRepository.insertNew(title, url)
     }
 
-    static getAll() {
-        return ventilatedFacadesRepository.getAll()
+    static async getAll() {
+        const data = await ventilatedFacadesRepository.getAll()
+        // console.log(data)
+        return data
     }
 
     static getById(id) {

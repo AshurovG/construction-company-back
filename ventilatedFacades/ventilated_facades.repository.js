@@ -1,3 +1,5 @@
+
+const db = require('../db')
 class ventilatedFacadesRepository {
     static insertNew(title, url) {    
         db.query('INSERT INTO ventilated_facades(ventilated_facades_title, ventilated_facades_url) VALUES ($1, $2) RETURNING *', [title, url], (error, results) => {
@@ -10,13 +12,16 @@ class ventilatedFacadesRepository {
     }
 
     static getAll() {
-        db.query('SELECT * FROM ventilated_facades', (error, results) => {
-            if (error) {
-                throw error;
-            }
-            const data = results.rows; // В этой переменной содержится массив объектов запроса
-            return data
-        });
+        return new Promise((resolve, reject) => {
+            db.query('SELECT * FROM ventilated_facades', (error, results) => {
+              if (error) {
+                reject(error);
+              } else {
+                const data = results.rows;
+                resolve(data);
+              }
+            });
+          });
     }
 
     static getById(id) {
