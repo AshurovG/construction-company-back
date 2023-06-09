@@ -61,7 +61,7 @@ class VentilatedFacadesController {
             })
             .catch((error) => {
                 if (error.status === 404) {
-                    res.status(404).send({status: 'Bad Request', message: error.message})
+                    res.status(error.status).send({status: 'Not found', message: error.message})
                 } else {
                     res.status(400).send({status: 'Bad Request', message: error.message})
                 }

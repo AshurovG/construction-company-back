@@ -7,10 +7,9 @@ class ventilatedFacadesDAO {
         this.url = url
     }
 
-    static _validateId(id) { // Проверка на число индекса
-        if (Number.isNaN(id)) {
-            console.log(1111111111111111111)
-            let error = new Error('invalidate id')
+    static _validateId(id) {
+        if (isNaN(id) || id <= 0) {
+            let error = new Error('invalid id')
             error.status = 400
             throw error
         }
@@ -58,21 +57,13 @@ class ventilatedFacadesDAO {
 
     static async getById(id) {   
         try {
-            this._validateId(id)
-            await await this.isExistsId(id)
+            await this._validateId(id)
+            await this.isExistsId(id)
             const query = await ventilatedFacadesRepository.getById(id)
-            // return {
-            //     query: query,
-            //     error: {}
-            // }
             return query
         } catch(error){
             throw error
         }
-            // this._validateId(id)
-            // this.isExistsId(id)
-            // const query = await ventilatedFacadesRepository.getById(id)
-            // return query
     }
 
     static updateById(id) {

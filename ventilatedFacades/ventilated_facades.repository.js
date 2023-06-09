@@ -31,7 +31,6 @@ class ventilatedFacadesRepository {
               reject(error);
             } else {
               const data = results.rows[0];
-            //   console.log(data)
               resolve(data);
             }
           });
