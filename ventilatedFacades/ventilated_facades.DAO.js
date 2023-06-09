@@ -7,9 +7,12 @@ class ventilatedFacadesDAO {
         this.url = url
     }
 
-    static _validateId(id) { // Проверка на пустоту индекса
+    static _validateId(id) { // Проверка на число индекса
         if (Number.isNaN(id)) {
-            throw new Error('invalidate id');
+            console.log(1111111111111111111)
+            let error = new Error('invalidate id')
+            error.status = 400
+            throw error
         }
     }
 
@@ -25,42 +28,63 @@ class ventilatedFacadesDAO {
         this._validateId(ventilatedFacade.id);
     }
 
-    static isExistsId(id) { // Проверка на наличие этого индекса в таблице
-        this._validateId(id)
-        try {
-            ventilatedFacadesRepository.getById(id)
-        } catch(err) {
-            throw new Error(err)
+    static async isExistsId(id) { // Проверка на наличие этого индекса в таблице
+        if (await ventilatedFacadesRepository.getById(id) === undefined) {
+            let error = new Error('no such id found')
+            error.status = 404
+            throw error
         }
     }
 
     static insertNew(title, url) {
-        _validate()
+        this._validate()
         return ventilatedFacadesRepository.insertNew(title, url)
     }
 
     static async getAll() {
-        const data = await ventilatedFacadesRepository.getAll()
-        // console.log(data)
-        return data
+        try {
+            const query = await ventilatedFacadesRepository.getAll()
+            return {
+                query: query,
+                error: {}
+            }
+        } catch(err) {
+            return {
+                query: '',
+                error: {status: 500, title: "select problem in the database"}
+            }
+        }
     }
 
-    static getById(id) {
-        this._validateId(id)
-        this.isExistsId(id)
-        return ventilatedFacadesRepository.getById(id)
+    static async getById(id) {   
+        try {
+            this._validateId(id)
+            await await this.isExistsId(id)
+            const query = await ventilatedFacadesRepository.getById(id)
+            // return {
+            //     query: query,
+            //     error: {}
+            // }
+            return query
+        } catch(error){
+            throw error
+        }
+            // this._validateId(id)
+            // this.isExistsId(id)
+            // const query = await ventilatedFacadesRepository.getById(id)
+            // return query
     }
 
     static updateById(id) {
         this._validateId(id)
         this._validate()
-        this.isExistsId(id)
+        // this.isExistsId(id)
         return ventilatedFacadesRepository.updateById(id)
     }
 
     static deleteById(id) {
         this._validateId(id)
-        this.isExistsId(id)
+        // this.isExistsId(id)
         return ventilatedFacadesRepository.deleteById(id)
     }
 }

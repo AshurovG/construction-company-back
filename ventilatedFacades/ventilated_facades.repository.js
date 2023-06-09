@@ -14,25 +14,29 @@ class ventilatedFacadesRepository {
     static getAll() {
         return new Promise((resolve, reject) => {
             db.query('SELECT * FROM ventilated_facades', (error, results) => {
-              if (error) {
-                reject(error);
-              } else {
-                const data = results.rows;
-                resolve(data);
-              }
+                if (error) {
+                    reject(error);
+                } else {
+                    const data = results.rows;
+                    resolve(data);
+                }
             });
-          });
+        });
     }
 
     static getById(id) {
-        db.query('SELECT * FROM ventilated_facades where ventilated_facades_id = $1', [id], (error, results) => {
+        return new Promise((resolve, reject) => {
+          db.query('SELECT * FROM ventilated_facades WHERE ventilated_facades_id = $1', [id], (error, results) => {
             if (error) {
-                throw error;
+              reject(error);
+            } else {
+              const data = results.rows[0];
+            //   console.log(data)
+              resolve(data);
             }
-            const data = results.rows[0]; // В этой переменной содержится полученный объект
-            return data
+          });
         });
-    }
+      }
 
     static updateById(id, title, url) {
         db.query('UPDATE ventilated_facades set ventilated_facades_title = $1, ventilated_facades_url = $2 where ventilated_facades_id = $3 RETURNING *', [id, title, url], (error, results) => {
