@@ -73,10 +73,16 @@ class ventilatedFacadesDAO {
         return ventilatedFacadesRepository.updateById(id)
     }
 
-    static deleteById(id) {
-        this._validateId(id)
-        // this.isExistsId(id)
-        return ventilatedFacadesRepository.deleteById(id)
+    static async deleteById(id) {
+        try {
+            await this._validateId(id)
+            await this.isExistsId(id)
+            const query = await ventilatedFacadesRepository.deleteById(id)
+            return query
+        } catch(error) {
+            throw error
+        }
+        
     }
 }
 

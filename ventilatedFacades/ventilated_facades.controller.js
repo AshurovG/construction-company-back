@@ -62,10 +62,37 @@ class VentilatedFacadesController {
             .catch((error) => {
                 if (error.status === 404) {
                     res.status(error.status).send({status: 'Not found', message: error.message})
+                } else if (error.status === 500) {
+                    res.status(500).send({status: 'Problem', message: 'Problem with database'})
                 } else {
                     res.status(400).send({status: 'Bad Request', message: error.message})
                 }
             });
+    }
+
+    async deleteVentilatedFacade(req, res) {
+        const id = req.params.id //id - из url страницы
+        ventilatedFacadesDAO.deleteById(id)
+            .then((data) => {
+                res.json(data)
+            })
+            .catch((error) => {
+                if (error.status === 404) {
+                    res.status(error.status).send({status: 'Not found', message: error.message})
+                } else if (error.status === 500) {
+                    res.status(500).send({status: 'Problem', message: 'Problem with database'})
+                } else {
+                    res.status(400).send({status: 'Bad Request', message: error.message})
+                }
+            });
+        // try
+        // {
+        //     const id = req.params.id //id - из url страницы
+        //     const ventilatedFacades = await db.query('DELETE FROM ventilated_facades where ventilated_facades_id = $1', [id])
+        //     res.json(ventilatedFacades.rows[0]) // Возвращаем полученную карточку
+        // } catch(err) {
+        //     res.status(400).send({status: 'Bad Request', message: err.message})
+        // }
     }
 
     // async updateVentilatedFacade(req, res) {
@@ -80,16 +107,7 @@ class VentilatedFacadesController {
     //     }
     // }
     
-    // async deleteVentilatedFacade(req, res) {
-    //     try
-    //     {
-    //         const id = req.params.id //id - из url страницы
-    //         const ventilatedFacades = await db.query('DELETE FROM ventilated_facades where ventilated_facades_id = $1', [id])
-    //         res.json(ventilatedFacades.rows[0]) // Возвращаем полученную карточку
-    //     } catch(err) {
-    //         res.status(400).send({status: 'Bad Request', message: err.message})
-    //     }
-    // }
+    
 
 
 
