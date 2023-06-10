@@ -41,23 +41,29 @@ class ventilatedFacadesRepository {
       }
 
     static updateById(id, title, url) {
-        db.query('UPDATE ventilated_facades set ventilated_facades_title = $1, ventilated_facades_url = $2 where ventilated_facades_id = $3 RETURNING *', [title, url, id], (error, results) => {
-            if (error) {
-                throw error;
-            }
-            const data = results.rows[0];
-            return data
-        });
+        return new Promise((resolve, reject) => {
+            db.query('UPDATE ventilated_facades set ventilated_facades_title = $1, ventilated_facades_url = $2 where ventilated_facades_id = $3 RETURNING *', [title, url, id], (error, results) => {
+              if (error) {
+                reject(error);
+              } else {
+                const data = results.rows[0];
+                resolve(data);
+              }
+            });
+          });
     }
 
     static deleteById(id) {
-        db.query('DELETE FROM ventilated_facades where ventilated_facades_id = $1', [id], (error, results) => {
-            if (error) {
-                throw error;
-            }
-            const data = results.rows[0];
-            return data
-        });
+        return new Promise((resolve, reject) => {
+            db.query('DELETE FROM ventilated_facades where ventilated_facades_id = $1', [id], (error, results) => {
+              if (error) {
+                reject(error);
+              } else {
+                const data = results.rows[0];
+                resolve(data);
+              }
+            });
+          });
     }
 }
 
