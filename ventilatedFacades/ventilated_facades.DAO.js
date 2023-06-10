@@ -15,13 +15,15 @@ class ventilatedFacadesDAO {
         }
     }
 
-    static _validate(ventilatedFacade) { // Проверка на определенность каждого параметра
-        if (
-            // ventilatedFacade.id === undefined ||
-            ventilatedFacade.title === undefined ||
-            ventilatedFacade.url === undefined
+    static async _validate(ventilatedFacade) { // Проверка на определенность каждого параметра
+        if (await (ventilatedFacade.title === undefined ||
+            ventilatedFacade.url === undefined)
         ) {
-            throw new Error('invalidate ventilated facade data');
+        console.log(11111)
+
+            let error = new Error('invalidate ventilated facade data');
+            error.status = 400
+            throw  error
         }
 
         this._validateId(ventilatedFacade.id);
@@ -66,11 +68,15 @@ class ventilatedFacadesDAO {
         }
     }
 
-    static updateById(id) {
-        this._validateId(id)
-        this._validate()
-        // this.isExistsId(id)
-        return ventilatedFacadesRepository.updateById(id)
+    static async updateById(id, title, url) {
+        try {
+            await this._validateId(id)
+            await this.isExistsId(id)
+            await this._validate({title, url})
+            return await ventilatedFacadesRepository.updateById(id, title, url)
+        } catch(error) {
+            throw error
+        }
     }
 
     static async deleteById(id) {

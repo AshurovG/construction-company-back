@@ -38,7 +38,7 @@ class ventilatedFacadesRepository {
       }
 
     static updateById(id, title, url) {
-        db.query('UPDATE ventilated_facades set ventilated_facades_title = $1, ventilated_facades_url = $2 where ventilated_facades_id = $3 RETURNING *', [id, title, url], (error, results) => {
+        db.query('UPDATE ventilated_facades set ventilated_facades_title = $1, ventilated_facades_url = $2 where ventilated_facades_id = $3 RETURNING *', [title, url, id], (error, results) => {
             if (error) {
                 throw error;
             }
