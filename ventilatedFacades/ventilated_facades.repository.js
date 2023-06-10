@@ -1,6 +1,6 @@
 
 const db = require('../db')
-class ventilatedFacadesRepository {
+class VentilatedFacadesRepository {
     static insertNew(title, url) {    
         return new Promise((resolve, reject) => {
             db.query('INSERT INTO ventilated_facades(ventilated_facades_title, ventilated_facades_url) VALUES ($1, $2) RETURNING *', [title, url], (error, results) => {
@@ -68,5 +68,5 @@ class ventilatedFacadesRepository {
 }
 
 module.exports = {
-    ventilatedFacadesRepository
+    VentilatedFacadesRepository
 }

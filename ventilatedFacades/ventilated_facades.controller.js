@@ -1,10 +1,10 @@
 const db = require('../db')
-const {ventilatedFacadesDAO} = require('./ventilated_facades.DAO')
+const {VentilatedFacadesDAO} = require('./ventilated_facades.DAO')
 
 class VentilatedFacadesController {
     createVentilatedFacade(req, res) {
         const {title, url} = req.body
-        ventilatedFacadesDAO.insertNew(title, url)
+        VentilatedFacadesDAO.insertNew(title, url)
             .then((data) => {
                 res.json(data)
             })
@@ -18,7 +18,7 @@ class VentilatedFacadesController {
     }
 
     async getVentilatedFacades(req, res) {
-        ventilatedFacadesDAO.getAll()
+        VentilatedFacadesDAO.getAll()
             .then((data) => {
                 res.json(data)
             })
@@ -33,7 +33,7 @@ class VentilatedFacadesController {
     
     async getOneVentilatedFacade(req, res) {
         const id = req.params.id //id - из url страницы
-        ventilatedFacadesDAO.getById(id)
+        VentilatedFacadesDAO.getById(id)
             .then((data) => {
                 res.json(data)
             })
@@ -50,7 +50,7 @@ class VentilatedFacadesController {
 
     async deleteVentilatedFacade(req, res) {
         const id = req.params.id //id - из url страницы
-        ventilatedFacadesDAO.deleteById(id)
+        VentilatedFacadesDAO.deleteById(id)
             .then((data) => {
                 res.json(data)
             })
@@ -67,7 +67,7 @@ class VentilatedFacadesController {
 
     async updateVentilatedFacade(req, res) {
         const {id, title, url} = req.body
-        ventilatedFacadesDAO.updateById(id, title, url)
+        VentilatedFacadesDAO.updateById(id, title, url)
             .then((data) => {
                 res.json(data)
             })

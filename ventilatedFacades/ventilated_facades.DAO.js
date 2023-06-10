@@ -1,6 +1,6 @@
-const {ventilatedFacadesRepository} = require('./ventilated_facades.repository')
+const {VentilatedFacadesRepository} = require('./ventilated_facades.repository')
 
-class ventilatedFacadesDAO {
+class VentilatedFacadesDAO {
     constructor(id, title, url) {
         this.id = id
         this.title = title
@@ -26,7 +26,7 @@ class ventilatedFacadesDAO {
     }
 
     static async isExistsId(id) { // Проверка на наличие этого индекса в таблице
-        if (await ventilatedFacadesRepository.getById(id) === undefined) {
+        if (await VentilatedFacadesRepository.getById(id) === undefined) {
             let error = new Error('no such id found')
             error.status = 404
             throw error
@@ -35,12 +35,12 @@ class ventilatedFacadesDAO {
 
     static async insertNew(title, url) {
         await this._validate({title, url})
-        return await ventilatedFacadesRepository.insertNew(title, url)
+        return await VentilatedFacadesRepository.insertNew(title, url)
     }
 
     static async getAll() {
         try {
-            const query = await ventilatedFacadesRepository.getAll()
+            const query = await VentilatedFacadesRepository.getAll()
             return query
         } catch(error) {
             throw error
@@ -51,7 +51,7 @@ class ventilatedFacadesDAO {
         try {
             await this._validateId(id)
             await this.isExistsId(id)
-            const query = await ventilatedFacadesRepository.getById(id)
+            const query = await VentilatedFacadesRepository.getById(id)
             return query
         } catch(error){
             throw error
@@ -63,7 +63,7 @@ class ventilatedFacadesDAO {
             await this._validateId(id)
             await this.isExistsId(id)
             await this._validate({title, url})
-            return await ventilatedFacadesRepository.updateById(id, title, url)
+            return await VentilatedFacadesRepository.updateById(id, title, url)
         } catch(error) {
             throw error
         }
@@ -73,7 +73,7 @@ class ventilatedFacadesDAO {
         try {
             await this._validateId(id)
             await this.isExistsId(id)
-            const query = await ventilatedFacadesRepository.deleteById(id)
+            const query = await VentilatedFacadesRepository.deleteById(id)
             return query
         } catch(error) {
             throw error
@@ -83,5 +83,5 @@ class ventilatedFacadesDAO {
 }
 
 module.exports = {
-    ventilatedFacadesDAO
+    VentilatedFacadesDAO
 }
