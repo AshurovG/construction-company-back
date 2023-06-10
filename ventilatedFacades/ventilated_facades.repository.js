@@ -2,12 +2,15 @@
 const db = require('../db')
 class ventilatedFacadesRepository {
     static insertNew(title, url) {    
-        db.query('INSERT INTO ventilated_facades(ventilated_facades_title, ventilated_facades_url) VALUES ($1, $2) RETURNING *', [title, url], (error, results) => {
-            if (error) {
-                throw error;
-            }
-            const data = results.rows[0];
-            return data
+        return new Promise((resolve, reject) => {
+            db.query('INSERT INTO ventilated_facades(ventilated_facades_title, ventilated_facades_url) VALUES ($1, $2) RETURNING *', [title, url], (error, results) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    const data = results.rows[0];
+                    resolve(data);
+                }
+            });
         });
     }
 
