@@ -18,19 +18,17 @@ class VentilatedFacadesController {
     }
 
     async getVentilatedFacades(req, res) {
-        let data
-        try 
-        {
-            data = await ventilatedFacadesDAO.getAll()
-            if (Object.keys(data.error).length === 0) {
-                res.json(data.query) // Возвращаем весь select
-            } else {
-                res.status(data.error.status.send({status: 'Bad Request', message: data.error.title }))
-            }
-            
-        } catch(err) {
-            res.status(400).send({status: 'Bad Request', message: err.message})
-        }
+        ventilatedFacadesDAO.getAll()
+            .then((data) => {
+                res.json(data)
+            })
+            .catch((error) => {
+                if (error.status === 500) {
+                    res.status(500).send({status: 'Problem', message: 'Problem with database'})
+                } else {
+                    res.status(400).send({status: 'Bad Request', message: error.message})
+                }
+            });
     }
     
     async getOneVentilatedFacade(req, res) {

@@ -44,15 +44,13 @@ class ventilatedFacadesDAO {
     static async getAll() {
         try {
             const query = await ventilatedFacadesRepository.getAll()
-            return {
-                query: query,
-                error: {}
-            }
-        } catch(err) {
-            return {
-                query: '',
-                error: {status: 500, title: "select problem in the database"}
-            }
+            return query
+            // return {
+            //     query: query,
+            //     error: {}
+            // }
+        } catch(error) {
+            throw error
         }
     }
 
