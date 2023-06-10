@@ -1,41 +1,54 @@
 const db = require('../db')
+const {VentilatedFacadesItemsDAO} = require('./ventilated_facade_items.DAO')
 
-class VentilatedFacadeItems {
-    async createVentilatedFacadeItem(req, res) {
-        try
-        {
-            const {ventilatedFacadeItemsUrl, ventilatedFacadesId} = req.body
-            const newVentilatedFacadeItem = await db.query('INSERT INTO ventilated_facade_items(ventilated_facade_items_url, ventilated_facades_id) VALUES ($1, $2) RETURNING *',
-            [ventilatedFacadeItemsUrl, ventilatedFacadesId])
-            res.json(newVentilatedFacadeItem.rows[0]) // Возвращаем только добавленный элемент
-        } catch(err) {
-            res.status(400).send({status: 'Bad Request', message: err.message})
-        }
+class VentilatedFacadesItemsItemsController {
+    createVentilatedFacadeItem(req, res) {
+        const {url, ventilatedFacadeId} = req.body
+        VentilatedFacadesItemsDAO.insertNew(url, ventilatedFacadeId)
+            .then((data) => {
+                res.json(data)
+            })
+            .catch((error) => {
+                if (error.status === 500) {
+                    res.status(500).send({status: 'Problem', message: 'Problem with database'})
+                } else {
+                    res.status(400).send({status: 'Bad Request', message: error.message})
+                }
+            });
     }
 
-    async getItemsFromOneVentilatedFacade(req, res) {
-        try
-        {
-            const id = req.query.id // Получаем айди как отдельный query параметр (после "?")
-            const ventilatedFacadeItems = await db.query('SELECT * FROM ventilated_facade_items WHERE ventilated_facades_id = $1', [id])
-            res.json(ventilatedFacadeItems.rows)
-        } catch(err) {
-            res.status(400).send({status: 'Bad Request', message: err.message})
-        }
+    async getVentilatedFacadeItemsFromOneVentilatedFacade(req, res) {
+        const ventilatedFacadeId = req.params.id
+        VentilatedFacadesItemsDAO.getAll(ventilatedFacadeId)
+            .then((data) => {
+                res.json(data)
+            })
+            .catch((error) => {
+                if (error.status === 500) {
+                    res.status(500).send({status: 'Problem', message: 'Problem with database'})
+                } else {
+                    res.status(400).send({status: 'Bad Request', message: error.message})
+                }
+            });
     }
 
-    async deleteItemsFromOneVentilatedFacade(req, res) {
-        try
-        {
-            const id1 = req.query.id
-            const id2 = req.params.id
-            const ventilatedFacadeItems = await db.query('DELETE FROM ventilated_facade_items WHERE ventilated_facades_id = $1 AND ventilated_facade_items_id = $2',
-            [id1, id2])
-            res.json(ventilatedFacadeItems.rows[0])
-        } catch(err) {
-            res.status(400).send({status: 'Bad Request', message: err.message})
-        }
+    async deleteVentilatedFacadeItem(req, res) {
+        const idOne = req.query.id
+        const idMany = req.params.id
+        VentilatedFacadesItemsDAO.deleteById(idOne, idMany)
+            .then((data) => {
+                res.json(data)
+            })
+            .catch((error) => {
+                if (error.status === 404) {
+                    res.status(error.status).send({status: 'Not found', message: error.message})
+                } else if (error.status === 500) {
+                    res.status(500).send({status: 'Problem', message: 'Problem with database'})
+                } else {
+                    res.status(400).send({status: 'Bad Request', message: error.message})
+                }
+            });
     }
 }
 
-module.exports = new VentilatedFacadeItems()
+module.exports = new VentilatedFacadesItemsItemsController()

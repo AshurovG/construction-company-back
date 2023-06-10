@@ -1,9 +1,9 @@
 const Router = require('express')
 const router = new Router()
-const ventilatedFacadeItemsController = require('./ventilated_facade_items.controller')
+const VentilatedFacadeItemsController = require('./ventilated_facade_items.controller')
 
-router.post('/ventilatedFacadesCards', ventilatedFacadeItemsController.createVentilatedFacadeItem)
-router.get('/ventilatedFacadesCards', ventilatedFacadeItemsController.getItemsFromOneVentilatedFacade)
-router.delete('/ventilatedFacadesCards/:id', ventilatedFacadeItemsController.deleteItemsFromOneVentilatedFacade)
+router.post('/ventilatedFacadeitems', VentilatedFacadeItemsController.createVentilatedFacadeItem)
+router.get('/ventilatedFacadeitems/:id', VentilatedFacadeItemsController.getVentilatedFacadeItemsFromOneVentilatedFacade)
+router.delete('/ventilatedFacadeitems/:id', VentilatedFacadeItemsController.deleteVentilatedFacadeItem)
 
 module.exports = router

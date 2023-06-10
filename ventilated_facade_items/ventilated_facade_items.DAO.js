@@ -16,42 +16,53 @@ class VentilatedFacadesItemsDAO {
     }
 
     static async _validate(ventilatedFacade) { // Проверка на определенность каждого параметра
-        if (await (ventilatedFacade.title === undefined ||
-            ventilatedFacade.url === undefined)
+        if (await (ventilatedFacade.url=== undefined ||
+            ventilatedFacade.ventilatedFacadeId === undefined)
         ) {
-            let error = new Error('invalidate ventilated facade data');
+            let error = new Error('invalidate ventilated facade items data');
             error.status = 400
             throw  error
         }
     }
 
-    static async isExistsId(id) { // Проверка на наличие этого индекса в таблице
-        if (await VentilatedFacadesItemsRepository.getById(id) === undefined) {
-            let error = new Error('no such id found')
+    static async isExistsIdOneAndIdMany(idOne, idMany) { // Проверка на наличие обоих индексов в таблице
+        if (await VentilatedFacadesItemsRepository.getByIdOneToMany(idOne, idMany) === undefined) {
+            let error = new Error('no such ventilated_facades_id or ventilated_facades_id found')
             error.status = 404
             throw error
         }
     }
 
-    static async insertNew(title, url) {
-        await this._validate({title, url})
-        return await VentilatedFacadesItemsRepository.insertNew(title, url)
+    static async isExistsIdMany(idMany) { // Проверка на наличие внешнего ключа в таблице
+        if (await VentilatedFacadesItemsRepository.getByIdMany(idMany) === undefined) {
+            let error = new Error('no such ventilated_facades_id found')
+            error.status = 404
+            throw error
+        }
     }
 
-    static async getAll(id) {
+    static async insertNew(url, ventilatedFacadeId) {
+        await this._validate({url, ventilatedFacadeId})
+        return await VentilatedFacadesItemsRepository.insertNew(url, ventilatedFacadeId)
+    }
+
+    static async getAll(ventilatedFacadeId) {
         try {
-            const query = await VentilatedFacadesItemsRepository.getAll(id)
+            await this._validateId(ventilatedFacadeId)
+            await this.isExistsIdMany(ventilatedFacadeId)
+            const query = await VentilatedFacadesItemsRepository.getAll(ventilatedFacadeId)
             return query
         } catch(error) {
             throw error
         }
     }
 
-    static async deleteById(id) {
+    static async deleteById(idOne, idMany) {
         try {
-            await this._validateId(id)
-            await this.isExistsId(id)
-            const query = await VentilatedFacadesItemsRepository.deleteById(id)
+            await this._validateId(idOne)
+            await this._validateId(idMany)
+            await this.isExistsIdOneAndIdMany(idOne, idMany)
+            const query = await VentilatedFacadesItemsRepository.deleteById(idOne, idMany)
             return query
         } catch(error) {
             throw error
