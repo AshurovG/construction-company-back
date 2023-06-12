@@ -1,6 +1,6 @@
-const {VentilatedFacadesItemsRepository} = require('./ventilated_facade_items.repository')
+const {exteriorDesignsItemsRepository} = require('./exterior_design.repository')
 
-class VentilatedFacadesItemsDAO {
+class ExteriorDesignItemsDAO {
     constructor(id, url) {
         this.id = id
         this.url = url
@@ -14,42 +14,42 @@ class VentilatedFacadesItemsDAO {
         }
     }
 
-    static async _validate(ventilatedFacade) { // Проверка на определенность каждого параметра
-        if (await (ventilatedFacade.url=== undefined ||
-            ventilatedFacade.ventilatedFacadeId === undefined)
+    static async _validate(exteriorDesign) { // Проверка на определенность каждого параметра
+        if (await (exteriorDesign.url=== undefined ||
+            exteriorDesign.exteriorDesignId === undefined)
         ) {
-            let error = new Error('invalidate ventilated facade items data');
+            let error = new Error('invalidate exterior design items data');
             error.status = 400
             throw  error
         }
     }
 
     static async isExistsIdOneAndIdMany(idOne, idMany) { // Проверка на наличие обоих индексов в таблице
-        if (await VentilatedFacadesItemsRepository.getByIdOneToMany(idOne, idMany) === undefined) {
-            let error = new Error('no such ventilated_facades_id or ventilated_facades_id found')
+        if (await exteriorDesignsItemsRepository.getByIdOneToMany(idOne, idMany) === undefined) {
+            let error = new Error('no such exterior_design_id or exterior_design_items_id found')
             error.status = 404
             throw error
         }
     }
 
     static async isExistsIdMany(idMany) { // Проверка на наличие внешнего ключа в таблице
-        if (await VentilatedFacadesItemsRepository.getByIdMany(idMany) === undefined) {
-            let error = new Error('no such ventilated_facades_id found')
+        if (await exteriorDesignsItemsRepository.getByIdMany(idMany) === undefined) {
+            let error = new Error('no such exterior_design_id found')
             error.status = 404
             throw error
         }
     }
 
-    static async insertNew(url, ventilatedFacadeId) {
-        await this._validate({url, ventilatedFacadeId})
-        return await VentilatedFacadesItemsRepository.insertNew(url, ventilatedFacadeId)
+    static async insertNew(url, exteriorDesignId) {
+        await this._validate({url, exteriorDesignId})
+        return await exteriorDesignsItemsRepository.insertNew(url, exteriorDesignId)
     }
 
-    static async getAll(ventilatedFacadeId) {
+    static async getAll(exteriorDesignId) {
         try {
-            await this._validateId(ventilatedFacadeId)
-            await this.isExistsIdMany(ventilatedFacadeId)
-            const query = await VentilatedFacadesItemsRepository.getAll(ventilatedFacadeId)
+            await this._validateId(exteriorDesignId)
+            await this.isExistsIdMany(exteriorDesignId)
+            const query = await exteriorDesignsItemsRepository.getAll(exteriorDesignId)
             return query
         } catch(error) {
             throw error
@@ -61,7 +61,7 @@ class VentilatedFacadesItemsDAO {
             await this._validateId(idOne) // Проверяем каждый индекс по отдельности
             await this._validateId(idMany)
             await this.isExistsIdOneAndIdMany(idOne, idMany)
-            const query = await VentilatedFacadesItemsRepository.deleteById(idOne, idMany)
+            const query = await exteriorDesignsItemsRepository.deleteById(idOne, idMany)
             return query
         } catch(error) {
             throw error
@@ -71,5 +71,5 @@ class VentilatedFacadesItemsDAO {
 }
 
 module.exports = {
-    VentilatedFacadesItemsDAO
+    ExteriorDesignItemsDAO
 }
