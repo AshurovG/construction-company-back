@@ -1,4 +1,3 @@
-const db = require('../db')
 const {ExteriorDesignDAO} = require('./exterior_design.DAO')
 
 class ExteriorDesignController {

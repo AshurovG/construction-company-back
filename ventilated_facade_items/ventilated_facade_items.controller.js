@@ -1,5 +1,3 @@
-const db = require('../db')
-const {VentilatedFacadesItemsDAO} = require('./ventilated_facade_items.DAO')
 
 class VentilatedFacadesItemsItemsController {
     createVentilatedFacadeItem(req, res) {
