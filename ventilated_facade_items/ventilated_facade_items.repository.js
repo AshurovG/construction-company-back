@@ -26,7 +26,7 @@ class VentilatedFacadesItemsRepository {
         });
     }
 
-    static getByIdOneToMany(idOne, idMany) { // Получение записи по первичному и внешнему ключу
+    static getByIdOneToMany(idOne, idMany) { // Получение записи по первичному и внешнему ключу для валидации
         return new Promise((resolve, reject) => {
           db.query('SELECT * FROM ventilated_facade_items WHERE ventilated_facades_id = $1 AND ventilated_facade_items_id = $2', [idOne, idMany], (error, results) => {
             if (error) {
@@ -39,7 +39,7 @@ class VentilatedFacadesItemsRepository {
         });
     }
 
-    static getByIdMany(idMany) { // Получение записи по первичному и внешнему ключу
+    static getByIdMany(idMany) { // Получение записи по внешнему ключу для валидации
         return new Promise((resolve, reject) => {
           db.query('SELECT * FROM ventilated_facade_items WHERE ventilated_facades_id = $1', [idMany], (error, results) => {
             if (error) {

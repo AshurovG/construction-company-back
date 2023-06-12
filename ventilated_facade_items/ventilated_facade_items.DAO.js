@@ -58,7 +58,7 @@ class VentilatedFacadesItemsDAO {
 
     static async deleteById(idOne, idMany) {
         try {
-            await this._validateId(idOne)
+            await this._validateId(idOne) // Проверяем каждый индекс по отдельности
             await this._validateId(idMany)
             await this.isExistsIdOneAndIdMany(idOne, idMany)
             const query = await VentilatedFacadesItemsRepository.deleteById(idOne, idMany)
