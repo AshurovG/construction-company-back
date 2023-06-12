@@ -1,9 +1,8 @@
 const {VentilatedFacadesItemsRepository} = require('./ventilated_facade_items.repository')
 
 class VentilatedFacadesItemsDAO {
-    constructor(id, title, url) {
+    constructor(id, url) {
         this.id = id
-        this.title = title
         this.url = url
     }
 
