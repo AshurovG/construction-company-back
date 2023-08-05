@@ -1,5 +1,6 @@
 const express = require('express')
-// const path = require('path')
+const cors = require('cors');
+
 
 const ventilatedFacadesRouter = require('./ventilatedFacades/ventilated_facades.routes')
 const ventilatedFacadeItemsRouter = require('./ventilated_facade_items/ventilated_facade_items.routes')
@@ -10,10 +11,9 @@ const questionsItemsRouter = require('./questions/questions.routes')
 const PORT = process.env.POST || 8000 // Берет порт окружения
 
 const app = express()
-// app.use(express.static(path.resolve(__dirname, 'client')))
-// app.get('*', (req, res) => {
-//   res.redirect('https://frolfasd.netlify.app/?anch=faqs');
-// });
+
+app.use(cors()) // Используем CORS middleware
+
 app.use(express.json()) // Так как express не может по умолчанию распарсить json строку
 app.use('/api', ventilatedFacadesRouter)
 app.use('/api', ventilatedFacadeItemsRouter)
