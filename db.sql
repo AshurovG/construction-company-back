@@ -79,13 +79,15 @@ values
 create table exterior_design (
 	exterior_design_id serial primary key,
 	exterior_design_title varchar(70) not null,
-	exterior_design_url text not null
+	exterior_design_url text not null,
+	exterior_design_description text not null
 );
 
-insert into exterior_design(exterior_design_title, exterior_design_url)
+insert into exterior_design(exterior_design_title, exterior_design_url, exterior_design_description)
 values
-('Вент. фасад 1', 'https://fasadin.ru/wp-content/uploads/d/d/e/dde1f16aa3171d7681591f3300a9454b.jpeg'),
-('Вент. фасад 2', 'http://profstroy.spb.ru/upload/iblock/d6b/d6bf2280328c05f87a967ca0ee6b6811.jpg')
+('Дизайн 1', 'https://fasadin.ru/wp-content/uploads/d/d/e/dde1f16aa3171d7681591f3300a9454b.jpeg', 'Дизайн 1 описание'),
+('Дизайн 2', 'http://profstroy.spb.ru/upload/iblock/d6b/d6bf2280328c05f87a967ca0ee6b6811.jpg', 'Дизайн 2 описание'),
+('Дизайн 3', 'http://profstroy.spb.ru/upload/iblock/d6b/d6bf2280328c05f87a967ca0ee6b6811.jpg', 'Дизайн 3 описание')
 
 select * from ventilated_facade_items
 

@@ -1,10 +1,11 @@
-const {ExteriorDesignReoisitory} = require('./exterior_design.repository')
+const { ExteriorDesignReoisitory } = require('./exterior_design.repository')
 
 class ExteriorDesignDAO {
-    constructor(id, title, url) {
+    constructor(id, title, url, desc) {
         this.id = id
         this.title = title
         this.url = url
+        this.url = desc
     }
 
     static _validateId(id) {
@@ -16,12 +17,16 @@ class ExteriorDesignDAO {
     }
 
     static async _validate(exteriorDesign) { // Проверка на определенность каждого параметра
+        console.log(exteriorDesign.title)
+        console.log(exteriorDesign.url)
+        console.log(exteriorDesign.desc)
         if (await (exteriorDesign.title === undefined ||
-            exteriorDesign.url === undefined)
+            exteriorDesign.url === undefined ||
+            exteriorDesign.desc === undefined)
         ) {
             let error = new Error('invalidate exterior design data');
             error.status = 400
-            throw  error
+            throw error
         }
     }
 
@@ -33,38 +38,39 @@ class ExteriorDesignDAO {
         }
     }
 
-    static async insertNew(title, url) {
-        await this._validate({title, url})
-        return await ExteriorDesignReoisitory.insertNew(title, url)
+    static async insertNew(title, url, desc) {
+        console.log(title, url, desc)
+        await this._validate({ title, url, desc })
+        return await ExteriorDesignReoisitory.insertNew(title, url, desc)
     }
 
     static async getAll() {
         try {
             const query = await ExteriorDesignReoisitory.getAll()
             return query
-        } catch(error) {
+        } catch (error) {
             throw error
         }
     }
 
-    static async getById(id) {   
+    static async getById(id) {
         try {
             await this._validateId(id)
             await this.isExistsId(id)
             const query = await ExteriorDesignReoisitory.getById(id)
             return query
-        } catch(error){
+        } catch (error) {
             throw error
         }
     }
 
-    static async updateById(id, title, url) {
+    static async updateById(id, title, url, desc) {
         try {
             await this._validateId(id)
             await this.isExistsId(id)
-            await this._validate({title, url})
-            return await ExteriorDesignReoisitory.updateById(id, title, url)
-        } catch(error) {
+            await this._validate({ title, url, desc })
+            return await ExteriorDesignReoisitory.updateById(id, title, url, desc)
+        } catch (error) {
             throw error
         }
     }
@@ -75,10 +81,10 @@ class ExteriorDesignDAO {
             await this.isExistsId(id)
             const query = await ExteriorDesignReoisitory.deleteById(id)
             return query
-        } catch(error) {
+        } catch (error) {
             throw error
         }
-        
+
     }
 }
 

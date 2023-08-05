@@ -1,17 +1,17 @@
-const {VentilatedFacadesDAO} = require('./ventilated_facades.DAO')
+const { VentilatedFacadesDAO } = require('./ventilated_facades.DAO')
 
 class VentilatedFacadesController {
     createVentilatedFacade(req, res) {
-        const {title, url} = req.body
+        const { title, url } = req.body
         VentilatedFacadesDAO.insertNew(title, url)
             .then((data) => {
                 res.json(data)
             })
             .catch((error) => {
                 if (error.status === 500) {
-                    res.status(500).send({status: 'Problem', message: 'Problem with database'})
+                    res.status(500).send({ status: 'Problem', message: 'Problem with database' })
                 } else {
-                    res.status(400).send({status: 'Bad Request', message: error.message})
+                    res.status(400).send({ status: 'Bad Request', message: error.message })
                 }
             });
     }
@@ -23,13 +23,13 @@ class VentilatedFacadesController {
             })
             .catch((error) => {
                 if (error.status === 500) {
-                    res.status(500).send({status: 'Problem', message: 'Problem with database'})
+                    res.status(500).send({ status: 'Problem', message: 'Problem with database' })
                 } else {
-                    res.status(400).send({status: 'Bad Request', message: error.message})
+                    res.status(400).send({ status: 'Bad Request', message: error.message })
                 }
             });
     }
-    
+
     async getOneVentilatedFacade(req, res) {
         const id = req.params.id //id - из url страницы
         VentilatedFacadesDAO.getById(id)
@@ -38,11 +38,11 @@ class VentilatedFacadesController {
             })
             .catch((error) => {
                 if (error.status === 404) {
-                    res.status(error.status).send({status: 'Not found', message: error.message})
+                    res.status(error.status).send({ status: 'Not found', message: error.message })
                 } else if (error.status === 500) {
-                    res.status(500).send({status: 'Problem', message: 'Problem with database'})
+                    res.status(500).send({ status: 'Problem', message: 'Problem with database' })
                 } else {
-                    res.status(400).send({status: 'Bad Request', message: error.message})
+                    res.status(400).send({ status: 'Bad Request', message: error.message })
                 }
             });
     }
@@ -55,28 +55,28 @@ class VentilatedFacadesController {
             })
             .catch((error) => {
                 if (error.status === 404) {
-                    res.status(error.status).send({status: 'Not found', message: error.message})
+                    res.status(error.status).send({ status: 'Not found', message: error.message })
                 } else if (error.status === 500) {
-                    res.status(500).send({status: 'Problem', message: 'Problem with database'})
+                    res.status(500).send({ status: 'Problem', message: 'Problem with database' })
                 } else {
-                    res.status(400).send({status: 'Bad Request', message: error.message})
+                    res.status(400).send({ status: 'Bad Request', message: error.message })
                 }
             });
     }
 
     async updateVentilatedFacade(req, res) {
-        const {id, title, url} = req.body
+        const { id, title, url } = req.body
         VentilatedFacadesDAO.updateById(id, title, url)
             .then((data) => {
                 res.json(data)
             })
             .catch((error) => {
                 if (error.status === 404) {
-                    res.status(error.status).send({status: 'Not found', message: error.message})
+                    res.status(error.status).send({ status: 'Not found', message: error.message })
                 } else if (error.status === 500) {
-                    res.status(500).send({status: 'Problem', message: 'Problem with database'})
+                    res.status(500).send({ status: 'Problem', message: 'Problem with database' })
                 } else {
-                    res.status(400).send({status: 'Bad Request', message: error.message})
+                    res.status(400).send({ status: 'Bad Request', message: error.message })
                 }
             });
     }

@@ -1,17 +1,17 @@
-const {ExteriorDesignDAO} = require('./exterior_design.DAO')
+const { ExteriorDesignDAO } = require('./exterior_design.DAO')
 
 class ExteriorDesignController {
     createExteriorDesign(req, res) {
-        const {title, url} = req.body
-        ExteriorDesignDAO.insertNew(title, url)
+        const { title, url, desc } = req.body
+        ExteriorDesignDAO.insertNew(title, url, desc)
             .then((data) => {
                 res.json(data)
             })
             .catch((error) => {
                 if (error.status === 500) {
-                    res.status(500).send({status: 'Problem', message: 'Problem with database'})
+                    res.status(500).send({ status: 'Problem', message: 'Problem with database' })
                 } else {
-                    res.status(400).send({status: 'Bad Request', message: error.message})
+                    res.status(400).send({ status: 'Bad Request', message: error.message })
                 }
             });
     }
@@ -23,13 +23,13 @@ class ExteriorDesignController {
             })
             .catch((error) => {
                 if (error.status === 500) {
-                    res.status(500).send({status: 'Problem', message: 'Problem with database'})
+                    res.status(500).send({ status: 'Problem', message: 'Problem with database' })
                 } else {
-                    res.status(400).send({status: 'Bad Request', message: error.message})
+                    res.status(400).send({ status: 'Bad Request', message: error.message })
                 }
             });
     }
-    
+
     async getOneExteriorDesign(req, res) {
         const id = req.params.id //id - из url страницы
         ExteriorDesignDAO.getById(id)
@@ -38,11 +38,11 @@ class ExteriorDesignController {
             })
             .catch((error) => {
                 if (error.status === 404) {
-                    res.status(error.status).send({status: 'Not found', message: error.message})
+                    res.status(error.status).send({ status: 'Not found', message: error.message })
                 } else if (error.status === 500) {
-                    res.status(500).send({status: 'Problem', message: 'Problem with database'})
+                    res.status(500).send({ status: 'Problem', message: 'Problem with database' })
                 } else {
-                    res.status(400).send({status: 'Bad Request', message: error.message})
+                    res.status(400).send({ status: 'Bad Request', message: error.message })
                 }
             });
     }
@@ -55,28 +55,28 @@ class ExteriorDesignController {
             })
             .catch((error) => {
                 if (error.status === 404) {
-                    res.status(error.status).send({status: 'Not found', message: error.message})
+                    res.status(error.status).send({ status: 'Not found', message: error.message })
                 } else if (error.status === 500) {
-                    res.status(500).send({status: 'Problem', message: 'Problem with database'})
+                    res.status(500).send({ status: 'Problem', message: 'Problem with database' })
                 } else {
-                    res.status(400).send({status: 'Bad Request', message: error.message})
+                    res.status(400).send({ status: 'Bad Request', message: error.message })
                 }
             });
     }
 
     async updateExteriorDesign(req, res) {
-        const {id, title, url} = req.body
-        ExteriorDesignDAO.updateById(id, title, url)
+        const { id, title, url, desc } = req.body
+        ExteriorDesignDAO.updateById(id, title, url, desc)
             .then((data) => {
                 res.json(data)
             })
             .catch((error) => {
                 if (error.status === 404) {
-                    res.status(error.status).send({status: 'Not found', message: error.message})
+                    res.status(error.status).send({ status: 'Not found', message: error.message })
                 } else if (error.status === 500) {
-                    res.status(500).send({status: 'Problem', message: 'Problem with database'})
+                    res.status(500).send({ status: 'Problem', message: 'Problem with database' })
                 } else {
-                    res.status(400).send({status: 'Bad Request', message: error.message})
+                    res.status(400).send({ status: 'Bad Request', message: error.message })
                 }
             });
     }
