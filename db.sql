@@ -106,6 +106,12 @@ values
 ('https://www.stroyportal.ru/media/cache/companies/173031/products/685484411/2fe8d597-7252-41f8-9fe2-f5b84b844488_image_large.jpg', 2)
 
 
+create table questions (
+	questions_id serial primary key,
+	questions_title text not null,
+	questions_text text not null
+)
+
 select * from questions
 
 insert into questions(questions_title, questions_text)
