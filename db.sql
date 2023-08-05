@@ -30,19 +30,21 @@ EXECUTE FUNCTION delete_cards_and_exterior_design();
 create table ventilated_facades (
 	ventilated_facades_id serial primary key,
 	ventilated_facades_title varchar(70) not null,
-	ventilated_facades_url text not null
+	ventilated_facades_url text not null,
+	ventilated_facades_description text not null
 );
 
-insert into ventilated_facades(ventilated_facades_title, ventilated_facades_url)
+insert into ventilated_facades(ventilated_facades_title, ventilated_facades_url, ventilated_facades_description)
 values
-('Вент. фасад 1', 'https://kremenki-gorod.ru/wp-content/uploads/5/a/4/5a4e01c3e5669a44dba0e3f8657331d9.jpeg'),
-('Вент. фасад 2', 'https://www.stroyportal.ru/media/cache/companies/173031/products/685484411/2fe8d597-7252-41f8-9fe2-f5b84b844488_image_large.jpg'),
-('Вент. фасад 3', 'https://www.ecehan.com.tr/wp-content/uploads/2019/05/home-page-kompozit-panel.jpeg'),
-('Вент. фасад 4', 'https://dekot21.ru/wp-content/uploads/9/8/3/983bcc84a5d7cf71605828ef9646bb40.jpeg'),
-('Вент. фасад 5', 'https://www.stroyportal.ru/media/cache/companies/199248/products/701184179/28440943_image_large.jpg'),
-('Вент. фасад 6', 'https://vektorfasad.ru/images/0-270922.jpg');
+('Вент. фасад 1', 'https://kremenki-gorod.ru/wp-content/uploads/5/a/4/5a4e01c3e5669a44dba0e3f8657331d9.jpeg', 'фасад описание 1'),
+('Вент. фасад 2', 'https://www.stroyportal.ru/media/cache/companies/173031/products/685484411/2fe8d597-7252-41f8-9fe2-f5b84b844488_image_large.jpg', 'фасад описание 2'),
+('Вент. фасад 3', 'https://www.ecehan.com.tr/wp-content/uploads/2019/05/home-page-kompozit-panel.jpeg', 'фасад описание 3'),
+('Вент. фасад 4', 'https://dekot21.ru/wp-content/uploads/9/8/3/983bcc84a5d7cf71605828ef9646bb40.jpeg', 'фасад описание 4'),
+('Вент. фасад 5', 'https://www.stroyportal.ru/media/cache/companies/199248/products/701184179/28440943_image_large.jpg', 'фасад описание 5'),
+('Вент. фасад 6', 'https://vektorfasad.ru/images/0-270922.jpg', 'фасад описание 6');
 
-select * from ventilated_facade_items
+
+select * from ventilated_facades
 
 create table ventilated_facade_items(
 	ventilated_facade_items_id serial primary key,

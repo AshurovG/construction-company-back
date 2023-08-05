@@ -2,8 +2,8 @@ const { VentilatedFacadesDAO } = require('./ventilated_facades.DAO')
 
 class VentilatedFacadesController {
     createVentilatedFacade(req, res) {
-        const { title, url } = req.body
-        VentilatedFacadesDAO.insertNew(title, url)
+        const { title, url, desc } = req.body
+        VentilatedFacadesDAO.insertNew(title, url, desc)
             .then((data) => {
                 res.json(data)
             })
@@ -65,8 +65,8 @@ class VentilatedFacadesController {
     }
 
     async updateVentilatedFacade(req, res) {
-        const { id, title, url } = req.body
-        VentilatedFacadesDAO.updateById(id, title, url)
+        const { id, title, url, desc } = req.body
+        VentilatedFacadesDAO.updateById(id, title, url, desc)
             .then((data) => {
                 res.json(data)
             })
