@@ -7,10 +7,12 @@ class UserController {
             res.json({
                 check: false
             })
+            return
         } else if (pass == passCheck && login == loginCheck) {
             res.json({
                 check: true
             })
+            return
         }
     }
 }
