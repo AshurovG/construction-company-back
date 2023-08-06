@@ -1,16 +1,16 @@
-
+const { VentilatedFacadesItemsDAO } = require('./ventilated_facade_items.DAO')
 class VentilatedFacadesItemsItemsController {
     createVentilatedFacadeItem(req, res) {
-        const {url, ventilatedFacadeId} = req.body
+        const { url, ventilatedFacadeId } = req.body
         VentilatedFacadesItemsDAO.insertNew(url, ventilatedFacadeId)
             .then((data) => {
                 res.json(data)
             })
             .catch((error) => {
                 if (error.status === 500) {
-                    res.status(500).send({status: 'Problem', message: 'Problem with database'})
+                    res.status(500).send({ status: 'Problem', message: 'Problem with database' })
                 } else {
-                    res.status(400).send({status: 'Bad Request', message: error.message})
+                    res.status(400).send({ status: 'Bad Request', message: error.message })
                 }
             });
     }
@@ -23,9 +23,9 @@ class VentilatedFacadesItemsItemsController {
             })
             .catch((error) => {
                 if (error.status === 500) {
-                    res.status(500).send({status: 'Problem', message: 'Problem with database'})
+                    res.status(500).send({ status: 'Problem', message: 'Problem with database' })
                 } else {
-                    res.status(400).send({status: 'Bad Request', message: error.message})
+                    res.status(400).send({ status: 'Bad Request', message: error.message })
                 }
             });
     }
@@ -39,11 +39,11 @@ class VentilatedFacadesItemsItemsController {
             })
             .catch((error) => {
                 if (error.status === 404) {
-                    res.status(error.status).send({status: 'Not found', message: error.message})
+                    res.status(error.status).send({ status: 'Not found', message: error.message })
                 } else if (error.status === 500) {
-                    res.status(500).send({status: 'Problem', message: 'Problem with database'})
+                    res.status(500).send({ status: 'Problem', message: 'Problem with database' })
                 } else {
-                    res.status(400).send({status: 'Bad Request', message: error.message})
+                    res.status(400).send({ status: 'Bad Request', message: error.message })
                 }
             });
     }
