@@ -29,7 +29,7 @@ class VentilatedFacadesDAO {
 
     static async isExistsId(id) { // Проверка на наличие этого индекса в таблице
         if (await VentilatedFacadesRepository.getById(id) === undefined) {
-            let error = new Error('no such id found')
+            let error = new Error(`no such id found. id=${id}`)
             error.status = 404
             throw error
         }
