@@ -1,3 +1,4 @@
+const fs = require('fs')
 const { VentilatedFacadesRepository } = require('./ventilated_facades.repository')
 
 class VentilatedFacadesDAO {
@@ -73,6 +74,12 @@ class VentilatedFacadesDAO {
 
     static async deleteById(id) {
         try {
+            const ventilatedFacade = await this.getById(id)
+            const fileUrl = ventilatedFacade.ventilated_facades_url
+            const newUrl = fileUrl.substring(fileUrl.indexOf("static"));
+            fs.unlink(newUrl, () => { // Для удаления самих файлов картинок
+                console.log(newUrl)
+            })
             await this._validateId(id)
             await this.isExistsId(id)
             const query = await VentilatedFacadesRepository.deleteById(id)

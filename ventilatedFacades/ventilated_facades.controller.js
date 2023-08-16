@@ -11,9 +11,7 @@ const fs = require('fs')
 // } catch (err) {
 //     res.status(422).json({ err })
 // }
-// fs.unlink(req.files[0].path, () => {
-//     res.json({ file: `/static/${req.files[0].originalname}` })
-// })
+
 class VentilatedFacadesController {
     async createVentilatedFacade(req, res) {
         const { title, desc } = req.body
@@ -24,6 +22,9 @@ class VentilatedFacadesController {
         console.log(`url: ${url}`)
         console.log(`title: ${title}`)
         console.log(`desc: ${desc}`)
+        fs.unlink(req.file.path, () => { // Для удаления закодированных файлов после использования
+            console.log(req.file.path)
+        })
         VentilatedFacadesDAO.insertNew(title, url, desc)
             .then((data) => {
                 res.json(data)
@@ -71,8 +72,8 @@ class VentilatedFacadesController {
     async deleteVentilatedFacade(req, res) {
         const id = req.params.id //id - из url страницы
         VentilatedFacadesDAO.deleteById(id)
-            .then((data) => {
-                res.json(data)
+            .then(() => {
+                res.json('Запись удалена из БД !')
             })
             .catch((error) => {
                 if (error.status === 404) {
