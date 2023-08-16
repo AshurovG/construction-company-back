@@ -1,8 +1,29 @@
 const { VentilatedFacadesDAO } = require('./ventilated_facades.DAO')
+const sharp = require('sharp')
+const fs = require('fs')
 
+// try {
+//     await sharp(req.files[0].path)
+//         .toFile(`../static/${req.files[0].originalname}`)
+// fs.unlink(req.files[0].path, () => {
+//     res.json({ file: `../static/${req.files[0].originalname}` })
+// })
+// } catch (err) {
+//     res.status(422).json({ err })
+// }
+// fs.unlink(req.files[0].path, () => {
+//     res.json({ file: `/static/${req.files[0].originalname}` })
+// })
 class VentilatedFacadesController {
-    createVentilatedFacade(req, res) {
-        const { title, url, desc } = req.body
+    async createVentilatedFacade(req, res) {
+        const { title, desc } = req.body
+        await sharp(req.file.path)
+            .toFile(`./static/${req.file.originalname}`)
+
+        const url = `http://localhost:8000/static/${req.file.originalname}`
+        console.log(`url: ${url}`)
+        console.log(`title: ${title}`)
+        console.log(`desc: ${desc}`)
         VentilatedFacadesDAO.insertNew(title, url, desc)
             .then((data) => {
                 res.json(data)
