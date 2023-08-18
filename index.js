@@ -24,7 +24,6 @@ app.use('/api', exteriorDesignRouter)
 app.use('/api', exteriorDesignItemsRouter)
 app.use('/api', questionsItemsRouter)
 app.use('/api', userRouter)
-// app.use(bodyParser.json({ limit: '1mb' })); // Установка максимального размера 10mb для JSON-тела запроса
 
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`))

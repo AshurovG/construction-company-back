@@ -86,8 +86,29 @@ class VentilatedFacadesController {
             });
     }
 
+    // const { title, desc } = req.body
+    // await sharp(req.file.path)
+    //     .toFile(`./static/${req.file.originalname}`)
+
+    // const url = `http://localhost:8000/static/${req.file.originalname}`
+    // console.log(`url: ${url}`)
+    // console.log(`title: ${title}`)
+    // console.log(`desc: ${desc}`)
+    // fs.unlink(req.file.path, () => { // Для удаления закодированных файлов после использования
+    //     console.log(req.file.path)
+    // })
+
     async updateVentilatedFacade(req, res) {
-        const { id, title, url, desc } = req.body
+        const { id, title, desc } = req.body
+        await sharp(req.file.path)
+            .toFile(`./static/${req.file.originalname}`)
+        const url = `http://localhost:8000/static/${req.file.originalname}`
+        console.log(`url: ${url}`)
+        console.log(`title: ${title}`)
+        console.log(`desc: ${desc}`)
+        fs.unlink(req.file.path, () => { // Для удаления закодированных файлов после использования
+            console.log(req.file.path)
+        })
         VentilatedFacadesDAO.updateById(id, title, url, desc)
             .then((data) => {
                 res.json(data)
