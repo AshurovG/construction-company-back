@@ -19,9 +19,9 @@ class VentilatedFacadesController {
             .toFile(`./static/${req.file.originalname}`)
 
         const url = `http://localhost:8000/static/${req.file.originalname}`
-        console.log(`url: ${url}`)
-        console.log(`title: ${title}`)
-        console.log(`desc: ${desc}`)
+        // console.log(`url: ${url}`)
+        // console.log(`title: ${title}`)
+        // console.log(`desc: ${desc}`)
         fs.unlink(req.file.path, () => { // Для удаления закодированных файлов после использования
             console.log(req.file.path)
         })
@@ -86,42 +86,46 @@ class VentilatedFacadesController {
             });
     }
 
-    // const { title, desc } = req.body
-    // await sharp(req.file.path)
-    //     .toFile(`./static/${req.file.originalname}`)
-
-    // const url = `http://localhost:8000/static/${req.file.originalname}`
-    // console.log(`url: ${url}`)
-    // console.log(`title: ${title}`)
-    // console.log(`desc: ${desc}`)
-    // fs.unlink(req.file.path, () => { // Для удаления закодированных файлов после использования
-    //     console.log(req.file.path)
-    // })
-
     async updateVentilatedFacade(req, res) {
-        const { id, title, desc } = req.body
-        await sharp(req.file.path)
-            .toFile(`./static/${req.file.originalname}`)
-        const url = `http://localhost:8000/static/${req.file.originalname}`
-        console.log(`url: ${url}`)
-        console.log(`title: ${title}`)
-        console.log(`desc: ${desc}`)
-        fs.unlink(req.file.path, () => { // Для удаления закодированных файлов после использования
-            console.log(req.file.path)
-        })
-        VentilatedFacadesDAO.updateById(id, title, url, desc)
-            .then((data) => {
-                res.json(data)
+        const { id, title, desc, imgUrl } = req.body
+        console.log(imgUrl)
+        if (imgUrl == 0) {
+            console.log('файл передан успешно')
+            await sharp(req.file.path)
+                .toFile(`./static/${req.file.originalname}`)
+            const url = `http://localhost:8000/static/${req.file.originalname}`
+            console.log(`url: ${url}`)
+            console.log(`title: ${title}`)
+            console.log(`desc: ${desc}`)
+            fs.unlink(req.file.path, () => { // Для удаления закодированных файлов после использования
+                console.log(req.file.path)
             })
-            .catch((error) => {
-                if (error.status === 404) {
-                    res.status(error.status).send({ status: 'Not found', message: error.message })
-                } else if (error.status === 500) {
-                    res.status(500).send({ status: 'Problem', message: 'Problem with database' })
-                } else {
-                    res.status(400).send({ status: 'Bad Request', message: error.message })
-                }
-            });
+            VentilatedFacadesDAO.updateById(id, title, url, desc)
+                .then((data) => {
+                    res.json(data)
+                })
+                .catch((error) => {
+                    if (error.status === 404) {
+                        res.status(error.status).send({ status: 'Not found', message: error.message })
+                    } else if (error.status === 500) {
+                        res.status(500).send({ status: 'Problem', message: 'Problem with database' })
+                    } else {
+                        res.status(400).send({ status: 'Bad Request', message: error.message })
+                    }
+                });
+        } else {
+            console.log('false jsklfjkls;')
+        }
+
+        // if (req.file != null) {
+
+        // } else {
+        //     console.log('файл не был передан')
+
+        // }
+        // console.log(`imgUrl is ${imgUrl}`)
+
+
     }
 }
 
