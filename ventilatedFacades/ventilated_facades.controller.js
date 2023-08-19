@@ -87,18 +87,20 @@ class VentilatedFacadesController {
     }
 
     async updateVentilatedFacade(req, res) {
-        const { id, title, desc, imgUrl } = req.body
-        console.log(imgUrl)
-        if (imgUrl == 0) {
-            console.log('файл передан успешно')
+        const { id, title, desc, imgUrl, isFileChanged } = req.body
+        const searchString = "8000/";
+        const startIndex = imgUrl.indexOf(searchString) + searchString.length;
+        const deletingFilePath = imgUrl.substring(startIndex);
+        if (isFileChanged == 1) {
+            console.log('Файл загружен успешно !')
             await sharp(req.file.path)
                 .toFile(`./static/${req.file.originalname}`)
             const url = `http://localhost:8000/static/${req.file.originalname}`
-            console.log(`url: ${url}`)
-            console.log(`title: ${title}`)
-            console.log(`desc: ${desc}`)
             fs.unlink(req.file.path, () => { // Для удаления закодированных файлов после использования
                 console.log(req.file.path)
+            })
+            fs.unlink(deletingFilePath, () => { // Для удаления закодированных файлов после использования
+                console.log(deletingFilePath)
             })
             VentilatedFacadesDAO.updateById(id, title, url, desc)
                 .then((data) => {
@@ -114,7 +116,7 @@ class VentilatedFacadesController {
                     }
                 });
         } else {
-            console.log('false jsklfjkls;')
+            console.log('Файл не был загружен !')
         }
 
         // if (req.file != null) {
