@@ -28,6 +28,16 @@ class VentilatedFacadesDAO {
         }
     }
 
+    static async _validateWithoutUrl(ventilatedFacade) { // Проверка на определенность каждого параметра
+        if (await (ventilatedFacade.title === undefined ||
+            ventilatedFacade.desc === undefined)
+        ) {
+            let error = new Error('invalidate ventilated facade data');
+            error.status = 400
+            throw error
+        }
+    }
+
     static async isExistsId(id) { // Проверка на наличие этого индекса в таблице
         if (await VentilatedFacadesRepository.getById(id) === undefined) {
             let error = new Error(`no such id found. id=${id}`)
@@ -67,6 +77,16 @@ class VentilatedFacadesDAO {
             await this.isExistsId(id)
             await this._validate({ title, url, desc })
             return await VentilatedFacadesRepository.updateById(id, title, url, desc)
+        } catch (error) {
+            throw error
+        }
+    }
+    static async updateByIdWithoutUrl(id, title, desc) {
+        try {
+            await this._validateId(id)
+            await this.isExistsId(id)
+            await this._validateWithoutUrl({ title, desc })
+            return await VentilatedFacadesRepository.updateByIdWithoutUrl(id, title, desc)
         } catch (error) {
             throw error
         }
