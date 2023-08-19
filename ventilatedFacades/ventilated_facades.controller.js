@@ -2,16 +2,6 @@ const { VentilatedFacadesDAO } = require('./ventilated_facades.DAO')
 const sharp = require('sharp')
 const fs = require('fs')
 
-// try {
-//     await sharp(req.files[0].path)
-//         .toFile(`../static/${req.files[0].originalname}`)
-// fs.unlink(req.files[0].path, () => {
-//     res.json({ file: `../static/${req.files[0].originalname}` })
-// })
-// } catch (err) {
-//     res.status(422).json({ err })
-// }
-
 class VentilatedFacadesController {
     async createVentilatedFacade(req, res) {
         const { title, desc } = req.body
@@ -19,9 +9,6 @@ class VentilatedFacadesController {
             .toFile(`./static/${req.file.originalname}`)
 
         const url = `http://localhost:8000/static/${req.file.originalname}`
-        // console.log(`url: ${url}`)
-        // console.log(`title: ${title}`)
-        // console.log(`desc: ${desc}`)
         fs.unlink(req.file.path, () => { // Для удаления закодированных файлов после использования
             console.log(req.file.path)
         })
@@ -131,15 +118,6 @@ class VentilatedFacadesController {
                 });
             console.log('Файл не был загружен !')
         }
-
-        // if (req.file != null) {
-
-        // } else {
-        //     console.log('файл не был передан')
-
-        // }
-        // console.log(`imgUrl is ${imgUrl}`)
-
 
     }
 }
