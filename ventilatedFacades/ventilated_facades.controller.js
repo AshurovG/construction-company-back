@@ -116,6 +116,19 @@ class VentilatedFacadesController {
                     }
                 });
         } else {
+            VentilatedFacadesDAO.updateByIdWithoutUrl(id, title, desc)
+                .then((data) => {
+                    res.json(data)
+                })
+                .catch((error) => {
+                    if (error.status === 404) {
+                        res.status(error.status).send({ status: 'Not found', message: error.message })
+                    } else if (error.status === 500) {
+                        res.status(500).send({ status: 'Problem', message: 'Problem with database' })
+                    } else {
+                        res.status(400).send({ status: 'Bad Request', message: error.message })
+                    }
+                });
             console.log('Файл не был загружен !')
         }
 
