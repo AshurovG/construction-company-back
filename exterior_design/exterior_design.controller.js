@@ -60,7 +60,7 @@ class ExteriorDesignController {
         const id = req.params.id //id - из url страницы
         ExteriorDesignDAO.deleteById(id)
             .then((data) => {
-                res.json(data)
+                res.json('Запись удалена из БД !')
             })
             .catch((error) => {
                 if (error.status === 404) {
