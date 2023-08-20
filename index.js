@@ -14,7 +14,6 @@ const userRouter = require('./user/user.routes')
 const PORT = 8000
 const app = express()
 app.use("/static", express.static(path.join(__dirname, "static")))
-// app.use("/static/items", express.static(path.join(__dirname, "static/items")))
 app.use(cors()) // Используем CORS middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
