@@ -41,14 +41,6 @@ class ExteriorDesignItemsDAO {
         }
     }
 
-    static async isExistsIdMany(idMany) { // Проверка на наличие внешнего ключа в таблице
-        if (await ExteriorDesignItemsRepository.getByIdMany(idMany) === undefined) {
-            let error = new Error('no such exterior_design_id found')
-            error.status = 404
-            throw error
-        }
-    }
-
     static async insertNew(url, exteriorDesignId) {
         console.log(exteriorDesignId)
         await this._validate({ url, exteriorDesignId })
@@ -58,7 +50,6 @@ class ExteriorDesignItemsDAO {
     static async getAll(exteriorDesignId) {
         try {
             await this._validateId(exteriorDesignId)
-            await this.isExistsIdMany(exteriorDesignId)
             const query = await ExteriorDesignItemsRepository.getAll(exteriorDesignId)
             return query
         } catch (error) {
