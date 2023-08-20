@@ -1,4 +1,5 @@
 const { ExteriorDesignItemsRepository } = require('./exterior_design_items.repository')
+const fs = require('fs')
 
 class ExteriorDesignItemsDAO {
     constructor(id, url) {
