@@ -77,7 +77,7 @@ class VentilatedFacadesItemsDAO {
             const fileUrl = ventilatedFacadeItem.ventilated_facade_items_url
             const newUrl = fileUrl.substring(fileUrl.indexOf("static"));
             fs.unlink(newUrl, () => { // Для удаления самих файлов картинок
-                console.log(newUrl)
+                return
             })
             const query = await VentilatedFacadesItemsRepository.deleteById(idOne, idMany)
             return query

@@ -1,5 +1,7 @@
 const fs = require('fs')
 const { VentilatedFacadesRepository } = require('./ventilated_facades.repository')
+const { VentilatedFacadesItemsDAO } = require('../ventilated_facade_items/ventilated_facade_items.DAO')
+
 
 class VentilatedFacadesDAO {
     constructor(id, title, url, desc) {
@@ -94,11 +96,21 @@ class VentilatedFacadesDAO {
 
     static async deleteById(id) {
         try {
+            const ventilatedFacadeItem = await VentilatedFacadesItemsDAO.getAll(id)
+            let json = JSON.parse(JSON.stringify(ventilatedFacadeItem));
+            let itemUrl = ''
+            for (let item of json) {
+                itemUrl = item.ventilated_facade_items_url.substring(item.ventilated_facade_items_url.indexOf("static"))
+                fs.unlink(itemUrl, () => { // Для удаления самих файлов картинок
+                    console.log(itemUrl)
+                })
+            }
+
             const ventilatedFacade = await this.getById(id)
             const fileUrl = ventilatedFacade.ventilated_facades_url
             const newUrl = fileUrl.substring(fileUrl.indexOf("static"));
-            fs.unlink(newUrl, () => { // Для удаления самих файлов картинок
-                console.log(newUrl)
+            fs.unlink(newUrl, () => {
+                return
             })
             await this._validateId(id)
             await this.isExistsId(id)
