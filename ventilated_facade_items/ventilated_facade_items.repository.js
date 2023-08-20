@@ -57,10 +57,8 @@ class VentilatedFacadesItemsRepository {
       db.query('SELECT * FROM ventilated_facade_items WHERE ventilated_facade_items_id = $1', [id], (error, results) => {
         if (error) {
           reject(error);
-          console.log('errorrrrrr')
         } else {
           const data = results.rows[0];
-          console.log(`DATA IS ${data}`)
           resolve(data);
         }
       });

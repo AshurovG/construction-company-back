@@ -10,7 +10,7 @@ class VentilatedFacadesController {
 
         const url = `http://localhost:8000/static/facades/${req.file.originalname}`
         fs.unlink(req.file.path, () => { // Для удаления закодированных файлов после использования
-            console.log(req.file.path)
+            return
         })
         VentilatedFacadesDAO.insertNew(title, url, desc)
             .then((data) => {
@@ -84,10 +84,10 @@ class VentilatedFacadesController {
                 .toFile(`./static/facades/${req.file.originalname}`)
             const url = `http://localhost:8000/static/facades/${req.file.originalname}`
             fs.unlink(req.file.path, () => { // Для удаления закодированных файлов после использования
-                console.log(req.file.path)
+                return
             })
-            fs.unlink(deletingFilePath, () => { // Для удаления закодированных файлов после использования
-                console.log(deletingFilePath)
+            fs.unlink(deletingFilePath, () => { // Для удаления старых файлов
+                return
             })
             VentilatedFacadesDAO.updateById(id, title, url, desc)
                 .then((data) => {
