@@ -1,7 +1,17 @@
 const { VentilatedFacadesItemsDAO } = require('./ventilated_facade_items.DAO')
+const sharp = require('sharp')
+const fs = require('fs')
+
 class VentilatedFacadesItemsItemsController {
-    createVentilatedFacadeItem(req, res) {
-        const { url, ventilatedFacadeId } = req.body
+    async createVentilatedFacadeItem(req, res) {
+        const { ventilatedFacadeId } = req.body
+        await sharp(req.file.path)
+            .toFile(`./static/items/${req.file.originalname}`)
+
+        const url = `http://localhost:8000/static/items/${req.file.originalname}`
+        fs.unlink(req.file.path, () => { // Для удаления закодированных файлов после использования
+            console.log(req.file.path)
+        })
         VentilatedFacadesItemsDAO.insertNew(url, ventilatedFacadeId)
             .then((data) => {
                 res.json(data)
