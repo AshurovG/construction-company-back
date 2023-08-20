@@ -1,5 +1,5 @@
-const Router = require('express')
-const router = new Router()
+const express = require('express');
+const router = express.Router();
 const multer = require('multer');
 
 const VentilatedFacadeItemsController = require('./ventilated_facade_items.controller')
@@ -15,6 +15,7 @@ const upload = multer({
 
 router.post('/ventilatedFacadeitems', upload.single('file'), VentilatedFacadeItemsController.createVentilatedFacadeItem)
 router.get('/ventilatedFacadeitems/:id', VentilatedFacadeItemsController.getVentilatedFacadeItemsFromOneVentilatedFacade)
+router.get('/ventilatedFacadeitem/:id', VentilatedFacadeItemsController.getOneVentilatedFacadeItem)
 router.delete('/ventilatedFacadeitems/:id', VentilatedFacadeItemsController.deleteVentilatedFacadeItem)
 
 module.exports = router

@@ -6,9 +6,9 @@ class VentilatedFacadesController {
     async createVentilatedFacade(req, res) {
         const { title, desc } = req.body
         await sharp(req.file.path)
-            .toFile(`./static/${req.file.originalname}`)
+            .toFile(`./static/facades/${req.file.originalname}`)
 
-        const url = `http://localhost:8000/static/${req.file.originalname}`
+        const url = `http://localhost:8000/static/facades/${req.file.originalname}`
         fs.unlink(req.file.path, () => { // Для удаления закодированных файлов после использования
             console.log(req.file.path)
         })
@@ -81,8 +81,8 @@ class VentilatedFacadesController {
         if (isFileChanged == 1) {
             console.log('Файл загружен успешно !')
             await sharp(req.file.path)
-                .toFile(`./static/${req.file.originalname}`)
-            const url = `http://localhost:8000/static/${req.file.originalname}`
+                .toFile(`./static/facades/${req.file.originalname}`)
+            const url = `http://localhost:8000/static/facades/${req.file.originalname}`
             fs.unlink(req.file.path, () => { // Для удаления закодированных файлов после использования
                 console.log(req.file.path)
             })

@@ -6,9 +6,9 @@ class VentilatedFacadesItemsItemsController {
     async createVentilatedFacadeItem(req, res) {
         const { ventilatedFacadeId } = req.body
         await sharp(req.file.path)
-            .toFile(`./static/items/${req.file.originalname}`)
+            .toFile(`./static/facadesItems/${req.file.originalname}`)
 
-        const url = `http://localhost:8000/static/items/${req.file.originalname}`
+        const url = `http://localhost:8000/static/facadesItems/${req.file.originalname}`
         fs.unlink(req.file.path, () => { // Для удаления закодированных файлов после использования
             console.log(req.file.path)
         })
@@ -33,6 +33,23 @@ class VentilatedFacadesItemsItemsController {
             })
             .catch((error) => {
                 if (error.status === 500) {
+                    res.status(500).send({ status: 'Problem', message: 'Problem with database' })
+                } else {
+                    res.status(400).send({ status: 'Bad Request', message: error.message })
+                }
+            });
+    }
+
+    async getOneVentilatedFacadeItem(req, res) {
+        const id = req.params.id //id - из url страницы
+        VentilatedFacadesItemsDAO.getById(id)
+            .then((data) => {
+                res.json(data)
+            })
+            .catch((error) => {
+                if (error.status === 404) {
+                    res.status(error.status).send({ status: 'Not found', message: error.message })
+                } else if (error.status === 500) {
                     res.status(500).send({ status: 'Problem', message: 'Problem with database' })
                 } else {
                     res.status(400).send({ status: 'Bad Request', message: error.message })

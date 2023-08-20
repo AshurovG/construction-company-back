@@ -1,4 +1,5 @@
 const { VentilatedFacadesItemsRepository } = require('./ventilated_facade_items.repository')
+const fs = require('fs')
 
 class VentilatedFacadesItemsDAO {
     constructor(id, url) {
@@ -32,13 +33,13 @@ class VentilatedFacadesItemsDAO {
         }
     }
 
-    // static async isExistsIdMany(idMany) { // Проверка на наличие внешнего ключа в таблице
-    //     if (await VentilatedFacadesItemsRepository.getByIdMany(idMany) === undefined) {
-    //         let error = new Error('no such ventilated_facades_id found')
-    //         error.status = 404
-    //         throw error
-    //     }
-    // }
+    static async isExistsId(id) { // Проверка на наличие этого индекса в таблице
+        if (await VentilatedFacadesItemsRepository.getById(id) === undefined) {
+            let error = new Error(`no such id found. id=${id}`)
+            error.status = 404
+            throw error
+        }
+    }
 
     static async insertNew(url, ventilatedFacadeId) {
         await this._validate({ url, ventilatedFacadeId })
@@ -56,11 +57,28 @@ class VentilatedFacadesItemsDAO {
         }
     }
 
+    static async getById(id) {
+        try {
+            await this._validateId(id)
+            await this.isExistsId(id)
+            const query = await VentilatedFacadesItemsRepository.getById(id)
+            return query
+        } catch (error) {
+            throw error
+        }
+    }
+
     static async deleteById(idOne, idMany) {
         try {
             await this._validateId(idOne) // Проверяем каждый индекс по отдельности
             await this._validateId(idMany)
             await this.isExistsIdOneAndIdMany(idOne, idMany)
+            const ventilatedFacadeItem = await this.getById(idMany)
+            const fileUrl = ventilatedFacadeItem.ventilated_facade_items_url
+            const newUrl = fileUrl.substring(fileUrl.indexOf("static"));
+            fs.unlink(newUrl, () => { // Для удаления самих файлов картинок
+                console.log(newUrl)
+            })
             const query = await VentilatedFacadesItemsRepository.deleteById(idOne, idMany)
             return query
         } catch (error) {
