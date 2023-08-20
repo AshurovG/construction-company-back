@@ -1,17 +1,26 @@
-const {ExteriorDesignItemsDAO} = require('./exterior_design_items.DAO')
+const { ExteriorDesignItemsDAO } = require('./exterior_design_items.DAO')
+const sharp = require('sharp')
+const fs = require('fs')
 
 class ExteriorDesignsItemsItemsController {
-    createExteriorDesignItem(req, res) {
-        const {url, exteriorDesignId} = req.body
+    async createExteriorDesignItem(req, res) {
+        const { exteriorDesignId } = req.body
+        await sharp(req.file.path)
+            .toFile(`./static/exteriorsItems/${req.file.originalname}`)
+
+        const url = `http://localhost:8000/static/exteriorsItems/${req.file.originalname}`
+        fs.unlink(req.file.path, () => { // Для удаления закодированных файлов после использования
+            console.log(req.file.path)
+        })
         ExteriorDesignItemsDAO.insertNew(url, exteriorDesignId)
             .then((data) => {
                 res.json(data)
             })
             .catch((error) => {
                 if (error.status === 500) {
-                    res.status(500).send({status: 'Problem', message: 'Problem with database'})
+                    res.status(500).send({ status: 'Problem', message: 'Problem with database' })
                 } else {
-                    res.status(400).send({status: 'Bad Request', message: error.message})
+                    res.status(400).send({ status: 'Bad Request', message: error.message })
                 }
             });
     }
@@ -24,9 +33,26 @@ class ExteriorDesignsItemsItemsController {
             })
             .catch((error) => {
                 if (error.status === 500) {
-                    res.status(500).send({status: 'Problem', message: 'Problem with database'})
+                    res.status(500).send({ status: 'Problem', message: 'Problem with database' })
                 } else {
-                    res.status(400).send({status: 'Bad Request', message: error.message})
+                    res.status(400).send({ status: 'Bad Request', message: error.message })
+                }
+            });
+    }
+
+    async getOneExteriorDesignItem(req, res) {
+        const id = req.params.id //id - из url страницы
+        ExteriorDesignItemsDAO.getById(id)
+            .then((data) => {
+                res.json(data)
+            })
+            .catch((error) => {
+                if (error.status === 404) {
+                    res.status(error.status).send({ status: 'Not found', message: error.message })
+                } else if (error.status === 500) {
+                    res.status(500).send({ status: 'Problem', message: 'Problem with database' })
+                } else {
+                    res.status(400).send({ status: 'Bad Request', message: error.message })
                 }
             });
     }
@@ -40,11 +66,11 @@ class ExteriorDesignsItemsItemsController {
             })
             .catch((error) => {
                 if (error.status === 404) {
-                    res.status(error.status).send({status: 'Not found', message: error.message})
+                    res.status(error.status).send({ status: 'Not found', message: error.message })
                 } else if (error.status === 500) {
-                    res.status(500).send({status: 'Problem', message: 'Problem with database'})
+                    res.status(500).send({ status: 'Problem', message: 'Problem with database' })
                 } else {
-                    res.status(400).send({status: 'Bad Request', message: error.message})
+                    res.status(400).send({ status: 'Bad Request', message: error.message })
                 }
             });
     }
