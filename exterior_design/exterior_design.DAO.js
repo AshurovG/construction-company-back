@@ -1,4 +1,6 @@
 const { ExteriorDesignReoisitory } = require('./exterior_design.repository')
+const { ExteriorDesignItemsDAO } = require('../exterior_design_items/exterior_design_items.DAO')
+
 
 class ExteriorDesignDAO {
     constructor(id, title, url, desc) {
@@ -95,6 +97,22 @@ class ExteriorDesignDAO {
 
     static async deleteById(id) {
         try {
+            const exteriorDesignItem = await ExteriorDesignItemsDAO.getAll(id)
+            let json = JSON.parse(JSON.stringify(exteriorDesignItem));
+            let itemUrl = ''
+            for (let item of json) {
+                itemUrl = item.exterior_design_items_url.substring(item.exterior_design_items_url.indexOf("static"))
+                fs.unlink(itemUrl, () => { // Для удаления самих файлов картинок
+                    console.log(itemUrl)
+                })
+            }
+
+            const exteriorDesign = await this.getById(id)
+            const fileUrl = exteriorDesign.exterior_design_url
+            const newUrl = fileUrl.substring(fileUrl.indexOf("static"));
+            fs.unlink(newUrl, () => {
+                return
+            })
             await this._validateId(id)
             await this.isExistsId(id)
             const query = await ExteriorDesignReoisitory.deleteById(id)
