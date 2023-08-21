@@ -79,15 +79,14 @@ class ExteriorDesignController {
         const startIndex = imgUrl.indexOf(searchString) + searchString.length;
         const deletingFilePath = imgUrl.substring(startIndex);
         if (isFileChanged == 1) {
-            console.log('Файл загружен успешно !')
+            fs.unlink(deletingFilePath, () => { // Для удаления cтарых файлов
+                console.log(deletingFilePath)
+            })
             await sharp(req.file.path)
                 .toFile(`./static/${req.file.originalname}`)
             const url = `http://localhost:8000/static/${req.file.originalname}`
             fs.unlink(req.file.path, () => { // Для удаления закодированных файлов после использования
                 console.log(req.file.path)
-            })
-            fs.unlink(deletingFilePath, () => { // Для удаления закодированных файлов после использования
-                console.log(deletingFilePath)
             })
             ExteriorDesignDAO.updateById(id, title, url, desc)
                 .then((data) => {

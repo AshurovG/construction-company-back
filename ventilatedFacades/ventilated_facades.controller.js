@@ -79,14 +79,13 @@ class VentilatedFacadesController {
         const startIndex = imgUrl.indexOf(searchString) + searchString.length;
         const deletingFilePath = imgUrl.substring(startIndex);
         if (isFileChanged == 1) {
-            console.log('Файл загружен успешно !')
+            fs.unlink(deletingFilePath, () => { // Для удаления старых файлов
+                return
+            })
             await sharp(req.file.path)
                 .toFile(`./static/facades/${req.file.originalname}`)
             const url = `http://localhost:8000/static/facades/${req.file.originalname}`
             fs.unlink(req.file.path, () => { // Для удаления закодированных файлов после использования
-                return
-            })
-            fs.unlink(deletingFilePath, () => { // Для удаления старых файлов
                 return
             })
             VentilatedFacadesDAO.updateById(id, title, url, desc)

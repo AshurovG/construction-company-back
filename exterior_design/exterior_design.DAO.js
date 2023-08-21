@@ -1,3 +1,4 @@
+const fs = require('fs')
 const { ExteriorDesignReoisitory } = require('./exterior_design.repository')
 const { ExteriorDesignItemsDAO } = require('../exterior_design_items/exterior_design_items.DAO')
 
