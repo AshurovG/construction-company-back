@@ -4,8 +4,7 @@
   "description": "back-end for construction company",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js"
+    "dev": "node index.js"
   },
   "repository": {
     "type": "git",
