@@ -1,0 +1,17 @@
+version: '3.5'
+
+services:
+  frolfasd_db:
+    container_name: frolfasd_db
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=13082003
+      - POSTGRES_USER=ashurovgeorgy
+    image: postgres:15.5-alpine3.18
+
+  frolfasd_back:
+    container_name: frolfasd_back
+    image: frolfasd_back
+    ports:
+      - "18000:8000"

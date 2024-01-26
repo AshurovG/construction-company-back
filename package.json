@@ -4,7 +4,7 @@
   "description": "back-end for construction company",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "node index.js"
   },
   "repository": {
     "type": "git",
@@ -15,5 +15,16 @@
   "bugs": {
     "url": "https://github.com/AshurovG/construction-company-back/issues"
   },
-  "homepage": "https://github.com/AshurovG/construction-company-back#readme"
+  "homepage": "https://github.com/AshurovG/construction-company-back#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "multer": "^1.4.5-lts.1",
+    "node": "^20.2.0",
+    "pg": "^8.11.0",
+    "sharp": "^0.32.5"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  }
 }
