@@ -1,8 +1,8 @@
 const Pool = require('pg').Pool
-const pool = new Pool({ // Настройки подключеня к БД
+const pool = new Pool({
     user: "ashurovgeorgy",
     password: "13082003",
-    host: "194.67.74.216",
+    host: "frolfasd_db", // Используйте имя сервиса вместо IP-адреса
     port: 5432,
     database: "frolfasd"
 })
