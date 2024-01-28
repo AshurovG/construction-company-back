@@ -16,7 +16,7 @@ const upload = multer({
 router.post('/exteriorDesign', upload.single('file'), exteriorDesignController.createExteriorDesign)
 router.get('/exteriorDesign', exteriorDesignController.getExteriorDesign)
 router.get('/exteriorDesign/:id', exteriorDesignController.getOneExteriorDesign)
-router.put('/exteriorDesign', upload.single('file'), exteriorDesignController.updateExteriorDesign) //обновление данных
+router.put('/exteriorDesign', upload.single('file'), exteriorDesignController.updateExteriorDesign) //обновление данных переделать!!!
 router.delete('/exteriorDesign/:id', exteriorDesignController.deleteExteriorDesign)
 
 module.exports = router
