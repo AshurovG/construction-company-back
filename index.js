@@ -2,6 +2,8 @@ const express = require('express')
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const path = require('path')
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json');
 
 const ventilatedFacadesRouter = require('./ventilatedFacades/ventilated_facades.routes')
 const ventilatedFacadeItemsRouter = require('./ventilated_facade_items/ventilated_facade_items.routes')
@@ -13,6 +15,7 @@ const userRouter = require('./user/user.routes')
 
 const PORT = 8000
 const app = express()
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use("/static", express.static(path.join(__dirname, "static")))
 app.use(cors()) // Используем CORS middleware
 app.use(bodyParser.json());
