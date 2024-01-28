@@ -8,6 +8,7 @@ services:
     environment:
       - POSTGRES_PASSWORD=13082003
       - POSTGRES_USER=ashurovgeorgy
+      - POSTGRES_DB=frolfasd
     image: postgres:15.5-alpine3.18
 
   frolfasd_back:
