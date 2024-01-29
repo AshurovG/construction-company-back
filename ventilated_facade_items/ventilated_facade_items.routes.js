@@ -13,9 +13,9 @@ const upload = multer({
     }
 })
 
-router.post('/ventilatedFacadeitems', upload.single('file'), VentilatedFacadeItemsController.createVentilatedFacadeItem)
-router.get('/ventilatedFacadeitems/:id', VentilatedFacadeItemsController.getVentilatedFacadeItemsFromOneVentilatedFacade)
-router.get('/ventilatedFacadeitem/:id', VentilatedFacadeItemsController.getOneVentilatedFacadeItem)
-router.delete('/ventilatedFacadeitems/:id', VentilatedFacadeItemsController.deleteVentilatedFacadeItem)
+router.post('/ventilated_facade_items', upload.single('file'), VentilatedFacadeItemsController.createVentilatedFacadeItem)
+router.get('/ventilated_facade_items/:id', VentilatedFacadeItemsController.getVentilatedFacadeItemsFromOneVentilatedFacade)
+router.get('/ventilated_facade_item/:id', VentilatedFacadeItemsController.getOneVentilatedFacadeItem)
+router.delete('/ventilated_facade_items/:id', VentilatedFacadeItemsController.deleteVentilatedFacadeItem)
 
 module.exports = router

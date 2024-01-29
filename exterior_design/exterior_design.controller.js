@@ -5,13 +5,13 @@ const fs = require('fs')
 class ExteriorDesignController {
     async createExteriorDesign(req, res) {
         const { title, desc } = req.body
-        await sharp(req.file.path)
-            .toFile(`./static/exteriors/${req.file.originalname}`)
+        // await sharp(req.file.path)
+        //     .toFile(`./static/exteriors/${req.file.originalname}`)
 
-        const url = `http://localhost:8000/static/exteriors/${req.file.originalname}`
-        fs.unlink(req.file.path, () => { // Для удаления закодированных файлов после использования
-            console.log(req.file.path)
-        })
+        // const url = `http://localhost:8000/static/exteriors/${req.file.originalname}`
+        // fs.unlink(req.file.path, () => { // Для удаления закодированных файлов после использования
+        //     console.log(req.file.path)
+        // })
         ExteriorDesignDAO.insertNew(title, url, desc)
             .then((data) => {
                 res.json(data)

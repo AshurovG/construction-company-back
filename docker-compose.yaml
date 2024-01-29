@@ -16,3 +16,5 @@ services:
     image: frolfasd_back
     ports:
       - "18000:8000"
+    volumes:
+      - ./static:/usr/src/app/static

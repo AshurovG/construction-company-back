@@ -16,6 +16,7 @@ class VentilatedFacadesItemsDAO {
     }
 
     static async _validate(ventilatedFacade) { // Проверка на определенность каждого параметра
+        console.log('facade is ', ventilatedFacade)
         if (await (ventilatedFacade.url === undefined ||
             ventilatedFacade.ventilatedFacadeId === undefined)
         ) {

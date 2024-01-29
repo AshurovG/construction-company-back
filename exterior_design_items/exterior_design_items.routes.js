@@ -13,9 +13,9 @@ const upload = multer({
     }
 })
 
-router.post('/exteriorDesignitems', upload.single('file'), exteriorDesignItemsController.createExteriorDesignItem)
-router.get('/exteriorDesignitems/:id', exteriorDesignItemsController.getExteriorDesignItemsFromOneExteriorDesign)
-router.get('/exteriorDesignitem/:id', exteriorDesignItemsController.getOneExteriorDesignItem)
-router.delete('/exteriorDesignitems/:id', exteriorDesignItemsController.deleteExteriorDesignItem)
+router.post('/exterior_design_items', upload.single('file'), exteriorDesignItemsController.createExteriorDesignItem)
+router.get('/exterior_design_items/:id', exteriorDesignItemsController.getExteriorDesignItemsFromOneExteriorDesign)
+router.get('/exterior_design_item/:id', exteriorDesignItemsController.getOneExteriorDesignItem)
+router.delete('/exterior_design_items/:id', exteriorDesignItemsController.deleteExteriorDesignItem)
 
 module.exports = router

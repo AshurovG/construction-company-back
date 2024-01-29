@@ -75,16 +75,16 @@ class VentilatedFacadesController {
 
     async updateVentilatedFacade(req, res) {
         const { id, title, desc, imgUrl, isFileChanged } = req.body
-        const searchString = "8000/";
-        const startIndex = imgUrl.indexOf(searchString) + searchString.length;
-        const deletingFilePath = imgUrl.substring(startIndex);
+        // const searchString = "ru/";
+        // const startIndex = imgUrl.indexOf(searchString) + searchString.length;
+        // const deletingFilePath = imgUrl.substring(startIndex);
         if (isFileChanged == 1) {
             fs.unlink(deletingFilePath, () => { // Для удаления старых файлов
                 return
             })
             await sharp(req.file.path)
                 .toFile(`./static/facades/${req.file.originalname}`)
-            const url = `http://localhost:8000/static/facades/${req.file.originalname}`
+            const url = `https://frolfasd.ru/static/facades/${req.file.originalname}`
             fs.unlink(req.file.path, () => { // Для удаления закодированных файлов после использования
                 return
             })
