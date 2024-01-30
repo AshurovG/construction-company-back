@@ -78,7 +78,35 @@ class ExteriorDesignReoisitory {
       });
     });
   }
+
+  static updateImportant(id, isImportant) {
+    return new Promise((resolve, reject) => {
+      db.query('UPDATE exterior_design set is_important = $1 where exterior_design_id = $2 RETURNING *', [isImportant, id], (error, results) => {
+        if (error) {
+          reject(error);
+        } else {
+            const data = results.rows[0];
+            resolve(data);
+        }
+      });
+    });
+  }
+
+  static getImportant() {
+    return new Promise((resolve, reject) => {
+      db.query('SELECT * FROM exterior_design where is_important = true', (error, results) => {
+        if (error) {
+          reject(error);
+        } else {
+            const data = results.rows;
+            resolve(data);
+        }
+      });
+    });
+  }
 }
+
+
 
 module.exports = {
   ExteriorDesignReoisitory

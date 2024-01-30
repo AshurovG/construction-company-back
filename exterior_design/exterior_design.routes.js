@@ -19,4 +19,7 @@ router.get('/exterior_design/:id', exteriorDesignController.getOneExteriorDesign
 router.put('/exterior_design', upload.single('file'), exteriorDesignController.updateExteriorDesign) //обновление данных переделать!!!
 router.delete('/exterior_design/:id', exteriorDesignController.deleteExteriorDesign)
 
+router.get('/exterior_design_important', exteriorDesignController.getImportant)
+router.put('/exterior_design_important/:id', exteriorDesignController.updateImportant)
+
 module.exports = router

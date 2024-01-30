@@ -3,6 +3,7 @@ const {QuestionsDAO} = require('./questions.DAO')
 class QuestionsController {
     createQuestions(req, res) {
         const {title, text} = req.body
+        console.log('title and text are', title, text)
         QuestionsDAO.insertNew(title, text)
             .then((data) => {
                 res.json(data)

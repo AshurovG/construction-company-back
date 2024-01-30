@@ -1,6 +1,7 @@
 const fs = require('fs')
 const { ExteriorDesignReoisitory } = require('./exterior_design.repository')
 const { ExteriorDesignItemsDAO } = require('../exterior_design_items/exterior_design_items.DAO')
+const { query } = require('express')
 
 
 class ExteriorDesignDAO {
@@ -122,6 +123,32 @@ class ExteriorDesignDAO {
             throw error
         }
 
+    }
+
+    static async getImportant() {
+        try {
+            const query = await ExteriorDesignReoisitory.getImportant()
+            console.log('query after getImportant', query)
+            return query
+        } catch (error) {
+            throw error
+        }
+    }
+
+    static async updateImportant(id, isImportant) {
+        try {
+            const queryGetImportant = await ExteriorDesignReoisitory.getImportant()
+            if (queryGetImportant.length === 6 && isImportant === true) {
+                let error = new Error('maximum of 6 important elements')
+                error.status = 400
+                throw error
+            }
+            await this._validateId(id)
+            await this.isExistsId(id)
+            return await ExteriorDesignReoisitory.updateImportant(id, isImportant)
+        } catch (error) {
+            throw error
+        }
     }
 }
 
