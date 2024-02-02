@@ -31,15 +31,15 @@ class ExteriorDesignDAO {
         }
     }
 
-    static async _validateWithoutUrl(exteriorDesign) { // Проверка на определенность каждого параметра
-        if (await (exteriorDesign.title === undefined ||
-            exteriorDesign.desc === undefined)
-        ) {
-            let error = new Error('invalidate exterior design data');
-            error.status = 400
-            throw error
-        }
-    }
+    // static async _validateWithoutUrl(exteriorDesign) { // Проверка на определенность каждого параметра
+    //     if (await (exteriorDesign.title === undefined ||
+    //         exteriorDesign.desc === undefined)
+    //     ) {
+    //         let error = new Error('invalidate exterior design data');
+    //         error.status = 400
+    //         throw error
+    //     }
+    // }
 
     static async isExistsId(id) { // Проверка на наличие этого индекса в таблице
         if (await ExteriorDesignReoisitory.getById(id) === undefined) {
@@ -79,7 +79,7 @@ class ExteriorDesignDAO {
         try {
             await this._validateId(id)
             await this.isExistsId(id)
-            await this._validate({ title, url, desc })
+            // await this._validate({ title, url, desc })
             return await ExteriorDesignReoisitory.updateById(id, title, url, desc)
         } catch (error) {
             throw error
@@ -90,7 +90,7 @@ class ExteriorDesignDAO {
         try {
             await this._validateId(id)
             await this.isExistsId(id)
-            await this._validateWithoutUrl({ title, desc })
+            // await this._validateWithoutUrl({ title, desc })
             return await ExteriorDesignReoisitory.updateByIdWithoutUrl(id, title, desc)
         } catch (error) {
             throw error

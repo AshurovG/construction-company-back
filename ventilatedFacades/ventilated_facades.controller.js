@@ -75,10 +75,14 @@ class VentilatedFacadesController {
     }
 
     async updateVentilatedFacade(req, res) {
-        const { id, title, desc, imgUrl, isFileChanged } = req.body
-        const searchString = "ru/";
-        const startIndex = imgUrl.indexOf(searchString) + searchString.length;
-        const deletingFilePath = imgUrl.substring(startIndex);
+        const { title, desc, imgUrl, isFileChanged } = req.body
+        const { id } = req.params
+        let deletingFilePath = '';
+        if (imgUrl) {
+            const searchString = "ru/";
+            const startIndex = imgUrl.indexOf(searchString) + searchString.length;
+            deletingFilePath = imgUrl.substring(startIndex);
+        }
         if (isFileChanged == 1) {
             fs.unlink(deletingFilePath, () => { // Для удаления старых файлов
                 return

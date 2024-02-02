@@ -43,7 +43,7 @@ class ExteriorDesignController {
     }
 
     async getOneExteriorDesign(req, res) {
-        const id = req.params.id //id - из url страницы
+        const id = req.params.id
         ExteriorDesignDAO.getById(id)
             .then((data) => {
                 res.json(data)
@@ -77,10 +77,14 @@ class ExteriorDesignController {
     }
 
     async updateExteriorDesign(req, res) {
-        const { id, title, desc, imgUrl, isFileChanged } = req.body
-        const searchString = "ru/";
-        const startIndex = imgUrl.indexOf(searchString) + searchString.length;
-        const deletingFilePath = imgUrl.substring(startIndex);
+        const  { title, desc, imgUrl, isFileChanged } = req.body
+        const { id } = req.params
+        let deletingFilePath = ''
+        if (imgUrl) {
+            const searchString = "ru/";
+            const startIndex = imgUrl.indexOf(searchString) + searchString.length;
+            deletingFilePath = imgUrl.substring(startIndex);
+        }
         if (isFileChanged == 1) {
             fs.unlink(deletingFilePath, () => { // Для удаления cтарых файлов
                 console.log(deletingFilePath)
