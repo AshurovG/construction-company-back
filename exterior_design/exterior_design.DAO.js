@@ -57,7 +57,8 @@ class ExteriorDesignDAO {
 
     static async getAll() {
         try {
-            const query = await ExteriorDesignReoisitory.getAll()
+            let query = await ExteriorDesignReoisitory.getAll()
+            query = query.sort((a, b) => a.exterior_design_id - b.exterior_design_id);
             return query
         } catch (error) {
             throw error
@@ -69,6 +70,10 @@ class ExteriorDesignDAO {
             await this._validateId(id)
             await this.isExistsId(id)
             const query = await ExteriorDesignReoisitory.getById(id)
+            let items = await ExteriorDesignReoisitory.getAllItemsById(id)
+            items = items.sort((a, b) => a.exterior_design_items_id - b.exterior_design_items_id);
+            query.items = items
+            console.log('jjkjk')
             return query
         } catch (error) {
             throw error
@@ -127,7 +132,8 @@ class ExteriorDesignDAO {
 
     static async getImportant() {
         try {
-            const query = await ExteriorDesignReoisitory.getImportant()
+            let query = await ExteriorDesignReoisitory.getImportant()
+            query = query.sort((a, b) => a.exterior_design_id - b.exterior_design_id)
             console.log('query after getImportant', query)
             return query
         } catch (error) {

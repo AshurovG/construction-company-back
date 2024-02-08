@@ -38,12 +38,24 @@ class QuestionsDAO {
         return await QuestionsReoisitory.insertNew(title, text)
     }
 
+    // static async getAll() {
+    //     try {
+    //         const query = await QuestionsReoisitory.getAll()
+    //         console.log(query)
+    //         return query
+    //     } catch(error) {
+    //         throw error
+    //     }
+    // }
+
     static async getAll() {
         try {
-            const query = await QuestionsReoisitory.getAll()
-            return query
-        } catch(error) {
-            throw error
+            let query = await QuestionsReoisitory.getAll();
+            query = query.sort((a, b) => a.questions_id - b.questions_id);
+            console.log(query);
+            return query;
+        } catch (error) {
+            throw error;
         }
     }
 

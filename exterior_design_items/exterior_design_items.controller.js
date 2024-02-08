@@ -3,10 +3,9 @@ const sharp = require('sharp')
 const fs = require('fs')
 
 class ExteriorDesignsItemsItemsController {
-
     async createExteriorDesignItem(req, res) {
         const { exteriorDesignId } = req.body
-        console.log(os.userInfo().username);
+        // console.log(os.userInfo().username);
         if (!req.file) {
             res.status(400).send({message: 'file was not transferred'})
             return
