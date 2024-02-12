@@ -4,6 +4,7 @@ const fs = require('fs')
 
 class ExteriorDesignController {
     async createExteriorDesign(req, res) {
+        console.log('CREATE')
         const { title, desc } = req.body
         // await sharp(req.file.path)
         //     .toFile(`./static/exteriors/${req.file.originalname}`)

@@ -38,7 +38,8 @@ class AuthController {
         }
     }
 
-    async auth(req, res) {
+    async check(req, res) {
+        console.log('aaauuttth')
         try {
             const { token } = req.body
             if (token === tokenG) {
