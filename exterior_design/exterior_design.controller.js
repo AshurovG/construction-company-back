@@ -4,7 +4,6 @@ const fs = require('fs')
 
 class ExteriorDesignController {
     async createExteriorDesign(req, res) {
-        console.log('CREATE')
         const { title, desc } = req.body
         // await sharp(req.file.path)
         //     .toFile(`./static/exteriors/${req.file.originalname}`)
@@ -126,7 +125,6 @@ class ExteriorDesignController {
                         res.status(400).send({ status: 'Bad Request', message: error.message })
                     }
                 });
-            console.log('Файл не был загружен !')
         }
     }
 

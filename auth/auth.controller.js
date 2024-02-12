@@ -1,24 +1,10 @@
 const bcrypt = require('bcryptjs');
+// const jwt = require('jsonwebtoken');
+const dotenv = require('dotenv')
+dotenv.config()
 
-// class AuthController {
-//     async login(req, res) {
-//         try {
-//             const { password } = req.body
-//             var hash = bcrypt.hashSync('123', 7);
-            
-            
-//             console.log(bcrypt.compareSync(password, '$2a$07$SsWkFLeOg1pXxxBxLZCvd.IyjJyNVH1PctkYA.wOBlJS5aAmywtTK'))
-//         } catch(e) {
-            
-//         }
-//     }
-// }
-
-
-const jwt = require('jsonwebtoken');
-
-const secretKey = 'secret'; // Замените на ваш секретный ключ
-const tokenG = jwt.sign({ admin: true }, secretKey, { expiresIn: '1h' });
+// const secretKey = 'secret'; // Замените на ваш секретный ключ
+// const tokenG = jwt.sign({ admin: true }, secretKey, { expiresIn: '1h' });
 
 class AuthController {
     async login(req, res) {
@@ -29,7 +15,7 @@ class AuthController {
             if (bcrypt.compareSync(password, storedHash)) {
                 // const token = jwt.sign({ admin: true }, secretKey, { expiresIn: '1h' });
                 
-                res.status(200).json({ message: 'Authentication successful', token: tokenG });
+                res.status(200).json({ message: 'Authentication successful', token: process.env.JWT_TOKEN });
             } else {
                 res.status(401).json({ message: 'Invalid password' });
             }
