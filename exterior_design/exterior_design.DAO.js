@@ -1,6 +1,7 @@
 const fs = require('fs')
 const { ExteriorDesignReoisitory } = require('./exterior_design.repository')
 const { ExteriorDesignItemsDAO } = require('../exterior_design_items/exterior_design_items.DAO')
+const { query } = require('express')
 
 
 class ExteriorDesignDAO {
@@ -30,15 +31,15 @@ class ExteriorDesignDAO {
         }
     }
 
-    static async _validateWithoutUrl(exteriorDesign) { // Проверка на определенность каждого параметра
-        if (await (exteriorDesign.title === undefined ||
-            exteriorDesign.desc === undefined)
-        ) {
-            let error = new Error('invalidate exterior design data');
-            error.status = 400
-            throw error
-        }
-    }
+    // static async _validateWithoutUrl(exteriorDesign) { // Проверка на определенность каждого параметра
+    //     if (await (exteriorDesign.title === undefined ||
+    //         exteriorDesign.desc === undefined)
+    //     ) {
+    //         let error = new Error('invalidate exterior design data');
+    //         error.status = 400
+    //         throw error
+    //     }
+    // }
 
     static async isExistsId(id) { // Проверка на наличие этого индекса в таблице
         if (await ExteriorDesignReoisitory.getById(id) === undefined) {
@@ -56,7 +57,8 @@ class ExteriorDesignDAO {
 
     static async getAll() {
         try {
-            const query = await ExteriorDesignReoisitory.getAll()
+            let query = await ExteriorDesignReoisitory.getAll()
+            query = query.sort((a, b) => a.exterior_design_id - b.exterior_design_id);
             return query
         } catch (error) {
             throw error
@@ -68,6 +70,10 @@ class ExteriorDesignDAO {
             await this._validateId(id)
             await this.isExistsId(id)
             const query = await ExteriorDesignReoisitory.getById(id)
+            let items = await ExteriorDesignReoisitory.getAllItemsById(id)
+            items = items.sort((a, b) => a.exterior_design_items_id - b.exterior_design_items_id);
+            query.items = items
+            console.log('jjkjk')
             return query
         } catch (error) {
             throw error
@@ -78,7 +84,7 @@ class ExteriorDesignDAO {
         try {
             await this._validateId(id)
             await this.isExistsId(id)
-            await this._validate({ title, url, desc })
+            // await this._validate({ title, url, desc })
             return await ExteriorDesignReoisitory.updateById(id, title, url, desc)
         } catch (error) {
             throw error
@@ -89,7 +95,7 @@ class ExteriorDesignDAO {
         try {
             await this._validateId(id)
             await this.isExistsId(id)
-            await this._validateWithoutUrl({ title, desc })
+            // await this._validateWithoutUrl({ title, desc })
             return await ExteriorDesignReoisitory.updateByIdWithoutUrl(id, title, desc)
         } catch (error) {
             throw error
@@ -122,6 +128,33 @@ class ExteriorDesignDAO {
             throw error
         }
 
+    }
+
+    static async getImportant() {
+        try {
+            let query = await ExteriorDesignReoisitory.getImportant()
+            query = query.sort((a, b) => a.exterior_design_id - b.exterior_design_id)
+            console.log('query after getImportant', query)
+            return query
+        } catch (error) {
+            throw error
+        }
+    }
+
+    static async updateImportant(id, isImportant) {
+        try {
+            const queryGetImportant = await ExteriorDesignReoisitory.getImportant()
+            if (queryGetImportant.length === 6 && isImportant === true) {
+                let error = new Error('maximum of 6 important elements')
+                error.status = 400
+                throw error
+            }
+            await this._validateId(id)
+            await this.isExistsId(id)
+            return await ExteriorDesignReoisitory.updateImportant(id, isImportant)
+        } catch (error) {
+            throw error
+        }
     }
 }
 

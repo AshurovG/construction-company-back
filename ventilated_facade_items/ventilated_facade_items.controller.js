@@ -36,39 +36,6 @@ class VentilatedFacadesItemsItemsController {
             });
     }
 
-    // async createVentilatedFacadeItem(req, res) {
-    //     const { ventilatedFacadeId } = req.body
-    
-    //     try {
-    //         // Проверяем существование каталога и создаем его, если нет
-    //         await fs.access(directoryPath);
-    //     } catch (error) {
-    //         if (error.code === 'ENOENT') {
-    //             await fs.mkdir(directoryPath, { recursive: true });
-    //         }
-    //     }
-    
-    //     await sharp(req.file.path)
-    //         .toFile(`./static/facadesItems/${req.file.originalname}`)
-    
-    //     const url = `https://frolfasd.ru/static/facadesItems/${req.file.originalname}`
-    //     console.log('изменение сработало!')
-    //     fs.unlink(req.file.path, () => { // Для удаления закодированных файлов после использования
-    //         console.log(req.file.path)
-    //     })
-    //     VentilatedFacadesItemsDAO.insertNew(url, ventilatedFacadeId)
-    //         .then((data) => {
-    //             res.json(data)
-    //         })
-    //         .catch((error) => {
-    //             if (error.status === 500) {
-    //                 res.status(500).send({ status: 'Problem', message: 'Problem with database' })
-    //             } else {
-    //                 res.status(400).send({ status: 'Bad Request', message: error.message })
-    //             }
-    //         });
-    // }
-
     async getVentilatedFacadeItemsFromOneVentilatedFacade(req, res) {
         const ventilatedFacadeId = req.params.id
         VentilatedFacadesItemsDAO.getAll(ventilatedFacadeId)

@@ -3,13 +3,16 @@ version: '3.5'
 services:
   frolfasd_db:
     container_name: frolfasd_db
+    image: postgres:15.5-alpine3.18
     ports:
       - "5432:5432"
     environment:
       - POSTGRES_PASSWORD=13082003
       - POSTGRES_USER=ashurovgeorgy
       - POSTGRES_DB=frolfasd
-    image: postgres:15.5-alpine3.18
+    volumes:
+      - db_data:/var/lib/postgresql/data # Добавьте это
+    restart: unless-stopped # Добавляем политику перезапуска
 
   frolfasd_back:
     container_name: frolfasd_back
@@ -18,3 +21,7 @@ services:
       - "18000:8000"
     volumes:
       - ./static:/usr/src/app/static
+    restart: unless-stopped # Добавляем политику перезапуска
+
+volumes:
+  db_data: # Определение тома данных

@@ -5,10 +5,16 @@ const fs = require('fs')
 class ExteriorDesignsItemsItemsController {
     async createExteriorDesignItem(req, res) {
         const { exteriorDesignId } = req.body
+        // console.log(os.userInfo().username);
+        if (!req.file) {
+            res.status(400).send({message: 'file was not transferred'})
+            return
+        }
         await sharp(req.file.path)
-            .toFile(`./static/exteriorsItems/${req.file.originalname}`)
+            .toFile(`/usr/src/app/static/exteriorsItems/${req.file.originalname}`)
 
-        const url = `http://localhost:8000/static/exteriorsItems/${req.file.originalname}`
+        const url = `https://frolfasd.ru/static/exteriorsItems/${req.file.originalname}`
+        console.log('изменение!!!')
         fs.unlink(req.file.path, () => { // Для удаления закодированных файлов после использования
             console.log(req.file.path)
         })

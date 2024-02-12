@@ -50,7 +50,8 @@ class ExteriorDesignItemsDAO {
     static async getAll(exteriorDesignId) {
         try {
             await this._validateId(exteriorDesignId)
-            const query = await ExteriorDesignItemsRepository.getAll(exteriorDesignId)
+            let query = await ExteriorDesignItemsRepository.getAll(exteriorDesignId)
+            query = query.sort((a, b) => a.exterior_design_items_id - b.exterior_design_items_id);
             return query
         } catch (error) {
             throw error
