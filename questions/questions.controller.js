@@ -1,10 +1,15 @@
 const {QuestionsDAO} = require('./questions.DAO')
+const dotenv = require('dotenv')
+dotenv.config()
 
 class QuestionsController {
     createQuestions(req, res) {
-        const {title, text} = req.body
-        console.log('title and text are', title, text)
-        QuestionsDAO.insertNew(title, text)
+        const {title, text, jwt} = req.body
+        console.log('jwt', jwt)
+        if (!jwt || jwt !== process.env.JWT_TOKEN) {
+            res.status(403).send({ message: 'Ivalid JWT'})
+        } else {
+            QuestionsDAO.insertNew(title, text)
             .then((data) => {
                 res.json(data)
             })
@@ -15,6 +20,7 @@ class QuestionsController {
                     res.status(400).send({status: 'Bad Request', message: error.message})
                 }
             });
+        }
     }
 
     async getQuestions(req, res) {
@@ -50,7 +56,12 @@ class QuestionsController {
 
     async deleteQuestions(req, res) {
         const id = req.params.id //id - из text страницы
-        QuestionsDAO.deleteById(id)
+        const { jwt } = req.body
+        console.log('jwt is', jwt)
+        if (!jwt || jwt !== process.env.JWT_TOKEN) {
+            res.status(403).send({ message: 'Ivalid JWT'})
+        } else {
+            QuestionsDAO.deleteById(id)
             .then((data) => {
                 res.json(data)
             })
@@ -63,11 +74,15 @@ class QuestionsController {
                     res.status(400).send({status: 'Bad Request', message: error.message})
                 }
             });
+        }
     }
 
     async updateQuestions(req, res) {
-        const {id, title, text} = req.body
-        QuestionsDAO.updateById(id, title, text)
+        const {id, title, text, jwt} = req.body
+        if (!jwt || jwt !== process.env.JWT_TOKEN) {
+            res.status(403).send({ message: 'Ivalid JWT'})
+        } else {
+            QuestionsDAO.updateById(id, title, text)
             .then((data) => {
                 res.json(data)
             })
@@ -80,6 +95,7 @@ class QuestionsController {
                     res.status(400).send({status: 'Bad Request', message: error.message})
                 }
             });
+        }
     }
 }
 

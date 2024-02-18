@@ -28,7 +28,7 @@ class AuthController {
         console.log('aaauuttth')
         try {
             const { token } = req.body
-            if (token === tokenG) {
+            if (token === process.env.JWT_TOKEN) {
                 res.status(200).json({ message: 'success' });
             } else {
                 res.status(401).json({ message: 'Invalid JWT' });

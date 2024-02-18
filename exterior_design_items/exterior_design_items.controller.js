@@ -1,34 +1,40 @@
 const { ExteriorDesignItemsDAO } = require('./exterior_design_items.DAO')
 const sharp = require('sharp')
 const fs = require('fs')
+const dotenv = require('dotenv')
+dotenv.config()
 
 class ExteriorDesignsItemsItemsController {
     async createExteriorDesignItem(req, res) {
-        const { exteriorDesignId } = req.body
-        // console.log(os.userInfo().username);
-        if (!req.file) {
-            res.status(400).send({message: 'file was not transferred'})
-            return
-        }
-        await sharp(req.file.path)
-            .toFile(`/usr/src/app/static/exteriorsItems/${req.file.originalname}`)
-
-        const url = `https://frolfasd.ru/static/exteriorsItems/${req.file.originalname}`
-        console.log('изменение!!!')
-        fs.unlink(req.file.path, () => { // Для удаления закодированных файлов после использования
-            console.log(req.file.path)
-        })
-        ExteriorDesignItemsDAO.insertNew(url, exteriorDesignId)
-            .then((data) => {
-                res.json(data)
+        const { exteriorDesignId, jwt } = req.body
+        if (!jwt || jwt !== process.env.JWT_TOKEN) {
+            res.status(403).send({ message: 'Ivalid JWT'})
+        } else {
+            if (!req.file) {
+                res.status(400).send({message: 'file was not transferred'})
+                return
+            }
+            await sharp(req.file.path)
+                .toFile(`/usr/src/app/static/exteriorsItems/${req.file.originalname}`)
+    
+            const url = `https://frolfasd.ru/static/exteriorsItems/${req.file.originalname}`
+            console.log('изменение!!!')
+            fs.unlink(req.file.path, () => { // Для удаления закодированных файлов после использования
+                console.log(req.file.path)
             })
-            .catch((error) => {
-                if (error.status === 500) {
-                    res.status(500).send({ status: 'Problem', message: 'Problem with database' })
-                } else {
-                    res.status(400).send({ status: 'Bad Request', message: error.message })
-                }
-            });
+            ExteriorDesignItemsDAO.insertNew(url, exteriorDesignId)
+                .then((data) => {
+                    res.json(data)
+                })
+                .catch((error) => {
+                    if (error.status === 500) {
+                        res.status(500).send({ status: 'Problem', message: 'Problem with database' })
+                    } else {
+                        res.status(400).send({ status: 'Bad Request', message: error.message })
+                    }
+                });
+        }
+        
     }
 
     async getExteriorDesignItemsFromOneExteriorDesign(req, res) {
@@ -66,7 +72,11 @@ class ExteriorDesignsItemsItemsController {
     async deleteExteriorDesignItem(req, res) {
         const idOne = req.query.id
         const idMany = req.params.id
-        ExteriorDesignItemsDAO.deleteById(idOne, idMany)
+        const { jwt } = req.body
+        if (!jwt || jwt !== process.env.JWT_TOKEN) {
+            res.status(403).send({ message: 'Ivalid JWT'})
+        } else {
+            ExteriorDesignItemsDAO.deleteById(idOne, idMany)
             .then((data) => {
                 res.json(data)
             })
@@ -79,6 +89,7 @@ class ExteriorDesignsItemsItemsController {
                     res.status(400).send({ status: 'Bad Request', message: error.message })
                 }
             });
+        }
     }
 }
 

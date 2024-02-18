@@ -11,8 +11,8 @@ services:
       - POSTGRES_USER=ashurovgeorgy
       - POSTGRES_DB=frolfasd
     volumes:
-      - db_data:/var/lib/postgresql/data # Добавьте это
-    restart: unless-stopped # Добавляем политику перезапуска
+      - db_data:/var/lib/postgresql/data
+    restart: unless-stopped
 
   frolfasd_back:
     container_name: frolfasd_back
@@ -21,7 +21,7 @@ services:
       - "18000:8000"
     volumes:
       - ./static:/usr/src/app/static
-    restart: unless-stopped # Добавляем политику перезапуска
+    restart: unless-stopped
 
 volumes:
-  db_data: # Определение тома данных
+  db_data:

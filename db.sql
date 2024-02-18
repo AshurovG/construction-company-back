@@ -31,7 +31,8 @@ create table ventilated_facades (
 	ventilated_facades_id serial primary key,
 	ventilated_facades_title varchar(70) not null,
 	ventilated_facades_url text not null,
-	ventilated_facades_description text not null
+	ventilated_facades_description text not null,
+	is_important boolean
 );
 
 insert into ventilated_facades(ventilated_facades_title, ventilated_facades_url, ventilated_facades_description)
@@ -82,7 +83,8 @@ create table exterior_design (
 	exterior_design_id serial primary key,
 	exterior_design_title varchar(70) not null,
 	exterior_design_url text not null,
-	exterior_design_description text not null
+	exterior_design_description text not null,
+	is_important boolean
 );
 
 insert into exterior_design(exterior_design_title, exterior_design_url, exterior_design_description)
