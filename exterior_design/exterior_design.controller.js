@@ -11,27 +11,31 @@ class ExteriorDesignController {
         if (!jwt || jwt !== process.env.JWT_TOKEN) {
             res.status(403).send({ message: 'Ivalid JWT'})
         } else {
-             // await sharp(req.file.path)
-        //     .toFile(`./static/exteriors/${req.file.originalname}`)
-        await sharp(req.file.path)
-        .toFile(`/usr/src/app/static/exteriors/${req.file.originalname}`)
-
-        // const url = `http://localhost:8000/static/exteriors/${req.file.originalname}`
-        const url = `https://frolfasd.ru/static/exteriors/${req.file.originalname}`
-        fs.unlink(req.file.path, () => { // Для удаления закодированных файлов после использования
-            console.log(req.file.path)
-        })
-        ExteriorDesignDAO.insertNew(title, url, desc)
-            .then((data) => {
-                res.json(data)
-            })
-            .catch((error) => {
-                if (error.status === 500) {
-                    res.status(500).send({ status: 'Problem', message: 'Problem with database' })
-                } else {
-                    res.status(400).send({ status: 'Bad Request', message: error.message })
-                }
-            });
+            let url = '';
+            if (req.file) {
+                await sharp(req.file.path)
+                .toFile(`/usr/src/app/static/exteriors/${req.file.originalname}`)
+                url = `https://frolfasd.ru/static/exteriors/${req.file.originalname}`
+                fs.unlink(req.file.path, () => { // Для удаления закодированных файлов после использования
+                    console.log(req.file.path)
+                })
+            }
+            else {
+                res.status(400).send({ status: 'Bad Request', message: "The file was not uploaded" })
+                return
+            }
+        
+            ExteriorDesignDAO.insertNew(title, url, desc)
+                .then((data) => {
+                    res.json(data)
+                })
+                .catch((error) => {
+                    if (error.status === 500) {
+                        res.status(500).send({ status: 'Problem', message: 'Problem with database' })
+                    } else {
+                        res.status(400).send({ status: 'Bad Request', message: error.message })
+                    }
+                });
         }
     }
 
@@ -101,7 +105,7 @@ class ExteriorDesignController {
                 const startIndex = imgUrl.indexOf(searchString) + searchString.length;
                 deletingFilePath = imgUrl.substring(startIndex);
             }
-            if (isFileChanged == 1) {
+            if (isFileChanged == 1 && req.file) {
                 fs.unlink(deletingFilePath, () => { // Для удаления cтарых файлов
                     console.log(deletingFilePath)
                 })

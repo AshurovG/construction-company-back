@@ -4,7 +4,7 @@ const multer = require('multer');
 
 const exteriorDesignItemsController = require('./exterior_design_items.controller')
 
-const MAX_SIZE = 2000000
+const MAX_SIZE = 5000000
 
 const upload = multer({
     dest: 'files/',
