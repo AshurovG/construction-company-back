@@ -1,11 +1,10 @@
-const Pool = require('pg').Pool
+const Pool = require("pg").Pool;
 const pool = new Pool({
-    user: "ashurovgeorgy",
-    password: "13082003",
-    host: "frolfasd_db", // Используйте имя сервиса вместо IP-адреса
-    port: 5432,
-    database: "frolfasd"
-})
+  user: "ashurovgeorgy",
+  password: "12345678",
+  host: "frolfasd_db",
+  port: 5432,
+  database: "frolfasd",
+});
 
-
-module.exports = pool
+module.exports = pool;

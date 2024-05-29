@@ -1,2 +1,5 @@
 node_modules/
 static/
+db.js
+db.sql
+.env
