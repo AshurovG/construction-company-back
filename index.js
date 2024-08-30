@@ -16,7 +16,9 @@ const app = express()
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use("/static", express.static(path.join(__dirname, "static")))
-app.use(cors()) // Используем CORS middleware
+//app.use(cors()) // Используем CORS middleware
+
+//app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json()) // Так как express не может по умолчанию распарсить json строку

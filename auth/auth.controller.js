@@ -10,8 +10,8 @@ class AuthController {
     async login(req, res) {
         try {
             const { password } = req.body;
-            const storedHash = '$2a$07$SsWkFLeOg1pXxxBxLZCvd.IyjJyNVH1PctkYA.wOBlJS5aAmywtTK'; // Здесь должен быть хеш, сохраненный в вашем приложении
-
+           // const storedHash = '$2a$07$SsWkFLeOg1pXxxBxLZCvd.IyjJyNVH1PctkYA.wOBlJS5aAmywtTK';
+	    const storedHash = '$2y$10$vB2tBn5FqzoHWbzMzZznwObv7s1Hb4zSX18uYSK1veqkoMsvp9i9u';
             if (bcrypt.compareSync(password, storedHash)) {
                 // const token = jwt.sign({ admin: true }, secretKey, { expiresIn: '1h' });
                 
